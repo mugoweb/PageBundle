@@ -1,0 +1,19 @@
+{% if fieldContentObject.layout is defined and fieldContentObject.layout %}
+
+    <div class="mugopage-layout-section">
+
+        {% set layout = fieldContentObject.layout %}
+
+        <div class="mugopage-label">Layout:</div>
+        <div class="mugopage-text">{{ layout.name }}</div>
+        <div class="mugopage-smalltext">({{ layout.identifier }})</div>
+
+    </div>
+
+    {% include '@ibexadesign/mugopage/field_types/view_sections/zone.html.twig' %}
+
+{% else %}
+
+    <div class="mugopage-empty">No layout</div>
+
+{% endif %}

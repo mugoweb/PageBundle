@@ -1,0 +1,42 @@
+<div class="custom-attribute-field-per-type" data-customattributetype="contentrelation" data-customattributename="Content Relation">
+
+    <label class="mugopage-label">Attribute Name<span aria-hidden="true">*</span></label>
+    <input class="mugopage-input" type="text" name="" data-id="name" value="" required="required" />
+
+    <label class="mugopage-label">Attribute Identifier<span aria-hidden="true">*</span></label>
+    <input class="mugopage-input" type="text" name="" data-id="identifier" value="" required="required" />
+
+    <label class="mugopage-label">Allowed Content Types</label>
+    <select class="mugopage-select" name="" data-id="allowedtypes[]" multiple>
+        {% if contentTypesInGroups is defined and contentTypesInGroups %}
+            {% for contentTypesInGroup in contentTypesInGroups %}
+
+                <optgroup label="{{ contentTypesInGroup.identifier }}" data-id="{{ contentTypesInGroup.id }}">
+
+                    {% if contentTypesInGroup.content_types is defined and contentTypesInGroup.content_types  %}
+
+                        {% for contentType in contentTypesInGroup.content_types %}
+                            <option value="{{ contentType.id }}" data-identifier="{{ contentType.identifier }}">{{ contentType.name }}</option>
+                        {% endfor %}
+
+                    {% endif %}
+
+                </optgroup>
+
+            {% endfor %}
+        {% endif %}
+    </select>
+
+    <div class="mugopage-info">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#information"></use>
+        </svg>
+        If empty, all content types are available for relation
+    </div>
+
+    <label class="mugopage-label">Maximum number of items<span aria-hidden="true">*</span></label>
+    <input class="mugopage-input" type="text" name="" data-id="maximumitems" value="" required="required" />
+
+    <input class="mugopage-input" type="hidden" name="" data-id="type" value="contentrelation" />
+
+</div>

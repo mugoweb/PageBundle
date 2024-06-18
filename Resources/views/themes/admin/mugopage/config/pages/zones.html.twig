@@ -1,0 +1,171 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{%- block title -%}
+    {% if blockTitle is defined and blockTitle %}
+        {{ blockTitle }}
+    {% else %}
+        {{ 'MugoPage'|trans }}
+    {% endif %}
+{%- endblock -%}
+
+{%- block breadcrumbs -%}
+    {% if breadcrumbItems is defined and breadcrumbItems %}
+        {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: breadcrumbItems } %}
+    {% endif %}
+{%- endblock -%}
+
+{%- block header -%}
+
+    {% set title = 'MugoPage'|trans %}
+    {% if blockTitle is defined and blockTitle %}
+        {% set title = blockTitle%}
+    {% endif %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: title,
+    } %}
+
+{%- endblock -%}
+
+{%- block content -%}
+
+    <section class="mugopage zones">
+        <div class="row justify-content-center align-items-start">
+
+            <div class="col-11 col-md-5 col-lg-4 col-xl-3 order-1 mugopage-sidebarlist">
+                <div class="action-bar"></div>
+                <div class="title">Zones</div>
+                <div class="description">Select an item to edit</div>
+                <div class="list">
+                    <div class="new">
+                        <button type="button" data-action="new" data-type="zone">
+                            <svg class="icon">
+                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#create"></use>
+                            </svg>
+                            Create Zone
+                        </button>
+                    </div>
+                    <div class="items">
+                        {% if zones is defined and zones %}
+                            {% for zone in zones %}
+
+                                <button class="item" data-name="{{ zone.data.name }}" data-identifier="{{ zone.identifier }}" data-action="edit" data-type="zone">
+                                    <div class="item-main">
+                                        <svg class="icon">
+                                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#landing_page"></use>
+                                        </svg>
+                                        <span>{{ zone.data.name }}</span>
+                                    </div>
+                                    <div class="item-secondary">
+                                        <span>{{ zone.identifier }}</span>
+                                    </div>
+                                </button>
+
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="ref d-none">
+                        <button class="item" data-id="">
+                            <div class="item-main">
+                                <svg class="icon">
+                                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#landing_page"></use>
+                                </svg>
+                                <span>Zone name</span>
+                            </div>
+                            <div class="item-secondary">
+                                <span>Zone Identifier</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-11 col-md mugopage-editorblock mb-4">
+                <div class="action-bar"></div>
+                <div class="container-block">
+                    <div class="title">Zones</div>
+                    <div class="edit-item-block">
+
+                        <div id="add-new-item-block" class="new collapse">
+                            <form id="mugopage-form" class="mugopage-columnated" method="POST" action="{{ path('mugopage_config.zones.save') }}">
+
+                                <div class="action-block action-block-sticky">
+                                    <div class="action-title">
+                                        <svg class="icon">
+                                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#file"></use>
+                                        </svg>
+                                        <span>New</span>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <button id="btn-delete-item" type="button" class="btn btn-mugopage-link" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">
+                                            <svg class="icon">
+                                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#trash"></use>
+                                            </svg>
+                                            <span>Delete</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-mugopage-primary" value="publish" name="publish">Publish</button>
+                                        <a class="btn btn-mugopage-inverse-primary" href="">Cancel</a>
+                                    </div>
+                                </div>
+
+                                <label class="mugopage-label">Name<span aria-hidden="true">*</span></label>
+                                <input class="mugopage-input" type="text" name="name" value="" required="required" />
+
+                                <label class="mugopage-label">Identifier<span aria-hidden="true">*</span></label>
+                                <input class="mugopage-input" type="text" name="identifier" value="" required="required" />
+                                <div class="mugopage-input blocked d-none identifier"></div>
+
+                                <input type="hidden" name="actiontype" value="new" />
+                                <input type="hidden" name="itemtype" value="zone" />
+
+                            </form>
+                        </div>
+
+                        <div id="empty-item-block" class="empty collapse show">
+                            <div>
+                                <div class="image">
+                                    <img src="{{ asset( 'bundles/ibexaadminui/img/empty-field-definition-group.svg' ) }}" />
+                                </div>
+                                <div class="info">Your section is empty</div>
+                                <div class="info-action">Select a zone to edit or create a new one</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="modal-confirm-delete" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete item?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this item?</p>
+                        <p>
+                            <div class="name">NAME</div>
+                            <div class="identifier">identifier</div>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="btn-confirm-delete" type="button" class="btn btn-primary" data-deleteurl="{{ path('mugopage_config.delete.item') }}">Yes, delete it</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('mugopage-config', null, 'ibexa') }}
+{%- endblock -%}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('mugopage-config', null, 'ibexa') }}
+{% endblock %}

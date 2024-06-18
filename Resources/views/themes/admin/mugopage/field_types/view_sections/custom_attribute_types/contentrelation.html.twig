@@ -1,0 +1,34 @@
+<label class="mugopage-label custom-attribute">{{ fieldData.name }}<span>({{ fieldData.identifier }})</span></label>
+<div class="mugopage-badge"><span>{{ fieldData.type }}</span></div>
+
+{% if fieldData.value is defined and fieldData.value %}
+
+    <ul>
+        {% for relatedContent in fieldData.value %}
+            <li class="content">
+
+                <div class="content-name">
+                    <a target="_blank" href="{{ path('ibexa.content.view', { contentId: relatedContent.content_id, viewType: 'full', locationId: relatedContent.location_id }) }}">{{ relatedContent.name }}</a>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label class="mugopage-label">type identifier</label>
+                        <div class="content-identifier">{{ relatedContent.identifier }}</div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="mugopage-label">loc #</label>
+                        <div class="content-location-id">{{ relatedContent.location_id }}</div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="mugopage-label">cont #</label>
+                        <div class="content-content-id">{{ relatedContent.content_id }}</div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <div class="font-italic">No related content</div>
+{% endif %}

@@ -1,0 +1,95 @@
+<div class="mugopage-block-repository d-none">
+
+    {% if blocks is defined and blocks %}
+        {% for block in blocks %}
+
+            <div class="block-item"
+                 data-name="{{ block.data.name }}"
+                 data-identifier="{{ block.identifier }}"
+                 data-zones="{% if block.data.zones is defined and block.data.zones %}{{ block.data.zones|join('|#|') }}{% endif %}"
+            >
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="btn-accordion button-handler" type="button">
+                            <svg class="icon">
+                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#drag"></use>
+                            </svg>
+                        </button>
+                        <div class="block-header-label">
+                            <div class="block-name">{{ block.data.name }}</div>
+                            <div class="block-identifier">{{ block.identifier }}</div>
+                        </div>
+                        <button class="btn-accordion remove" type="button">
+                            <svg class="icon">
+                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#trash"></use>
+                            </svg>
+                        </button>
+                        <button class="btn-accordion accordion-action collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}-block-{{ loop.index  }}" aria-expanded="false" aria-controls="{{ id }}-block-{{ loop.index  }}">
+                            <svg class="icon">
+                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="{{ id }}-block-{{ loop.index  }}" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+
+                            <div class="mugopage-section-divider">Block Config Properties</div>
+
+                            <div class="mugopage-form-group">
+                                <label class="mugopage-label">Block Type Name</label>
+                                <div class="mugopage-input">{{ block.data.name }}</div>
+                            </div>
+
+                            <div class="mugopage-form-group">
+                                <label class="mugopage-label">Block Type Identifier</label>
+                                <div class="mugopage-input">{{ block.identifier }}</div>
+                            </div>
+
+                            <div class="mugopage-form-group">
+                                <label class="mugopage-label">Block Type Template</label>
+                                <div class="mugopage-input">{{ block.data.template }}</div>
+                            </div>
+
+                            <div class="mugopage-form-group">
+                                <label class="mugopage-label full">Block Type Description</label>
+                                <div class="mugopage-input">{{ block.data.description|nl2br() }}</div>
+                            </div>
+
+                            <div class="mugopage-section-divider">Block Data</div>
+
+                            <div class="content-fields">
+
+                                <label class="mugopage-label">Name<span aria-hidden="true">*</span></label>
+                                <input class="mugopage-input" type="text" name="name" value="" required="required" />
+
+                                <label class="mugopage-label">Block ID<span aria-hidden="true">*</span></label>
+                                <div class="mugopage-input blocked block-id">block-id</div>
+
+                            </div>
+
+                            <div class="mugopage-section-divider">Block Attributes</div>
+
+                            <div class="custom-attributes">
+
+                                {% if block.data.attr is defined and block.data.attr %}
+
+                                    {% for customFieldKey, customFieldData in block.data.attr %}
+
+                                        {% include '@ibexadesign/mugopage/field_types/edit_sections/custom_attribute_types/' ~ customFieldData.type ~ '.html.twig'
+                                            with { fieldKey: customFieldKey, fieldData: customFieldData } %}
+
+                                    {% endfor %}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+</div>

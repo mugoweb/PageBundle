@@ -1,0 +1,57 @@
+<div class="mugopage-default-template-section">
+
+    <div class="mugopage-default-template-title">Default Zone Template</div>
+
+    {% if zone is defined and zone %}
+
+        <div class="mugopage-default-template-subtitle">Properties</div>
+
+        <div class="mugopage-default-template-group">
+            <label>name</label>
+            <div>{% if zone.name is defined and zone.name %}{{ zone.name }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>identifier</label>
+            <div>{% if zone.identifier is defined and zone.identifier %}{{ zone.identifier }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>type</label>
+            <div>{% if zone.type is defined and zone.type %}{{ zone.type }}{% endif %}</div>
+        </div>
+
+        {% set configArray = parse_stdclass_to_array(zone.config) %}
+
+        <div class="mugopage-default-template-subtitle">Config</div>
+        {% for zoneKey, zoneValue in configArray %}
+
+            {% if zoneValue is not iterable %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ zoneKey }}</label>
+                    <div>{{ zoneValue }}</div>
+                </div>
+            {% else %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ zoneKey }}</label>
+                    <div><< iterable >></div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+        <div class="mugopage-default-template-subtitle">Blocks</div>
+
+        {% if parameters is not defined %}
+            {% set parameters = [] %}
+        {% endif %}
+
+        {% if blocks is defined and blocks %}
+            {% for block in blocks %}
+                {{ render_mugopage_block(block, parameters, true) }}
+            {% endfor %}
+        {% endif %}
+
+    {% endif %}
+
+</div>

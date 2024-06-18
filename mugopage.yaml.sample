@@ -1,0 +1,2 @@
+mugopage:
+    resource: '@MugoPageBundle/Resources/config/routing.yaml'

@@ -1,0 +1,635 @@
+/**
+ * Colors
+ */
+$mp-lighter-gray: #f3f3f6;
+$mp-light-gray: #e0e0e8;
+$mp-mlight-gray: #cfd1d3;
+$mp-medium-gray: #71767c;
+$mp-dark-gray: #333333;
+$mp-darker-gray: #131c26;
+$mp-black: #000000;
+$mp-light-blue: #4191ff;
+$mp-white: #ffffff;
+$mp-danger: #db0032;
+$mp-light-danger: #fbe5ea;
+$mp-light-success: #E4F4E8;
+$mp-ibexa-primary: #ae1164;
+
+.mugopage {
+
+    /**
+     * generics
+     */
+    .mugopage-ibexa-field {
+        textarea {
+            display: none;
+        }
+    }
+
+    .mugopage-label {
+        color: $mp-medium-gray;
+        font-size: .75rem;
+        line-height: 1.125rem;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mugopage-section-divider {
+        padding: 2rem 0 .5rem 0;
+        font-size: .75rem;
+        font-weight: 700;
+        border-bottom: 1px solid $mp-mlight-gray;
+    }
+
+    .mugopage-section-information {
+        background: $mp-lighter-gray;
+        padding: 2rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 2rem;
+        }
+
+        .content {
+            flex: 1 1 100%;
+            font-size: 0.875rem;
+            color: #131c26;
+            line-height: 1.3125rem;
+        }
+    }
+
+    .layout-item {
+        display: flex;
+        align-items: center;
+        background: $mp-white;
+        border: .0625rem solid $mp-light-gray;
+        border-radius: .625rem;
+        padding: 1rem;
+        margin: 0.5rem 2rem;
+        box-shadow: 0 0px 0px $mp-light-gray;
+        text-align: left;
+        transition: all 0.5s ease-in-out;
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            margin: 0 2rem 0 1rem;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .content {
+            flex: 1 1 100%;
+
+            .name {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+
+            .identifier {
+                color: $mp-medium-gray;
+                font-size: .75rem;
+                line-height: 1.125rem;
+            }
+        }
+
+        &:hover, &:active, &:focus, &.active {
+            border-color: $mp-darker-gray;
+            box-shadow: 1rem 1px 1rem $mp-light-gray;
+
+            .icon {
+                opacity: 0.25;
+            }
+        }
+
+        &.active {
+            background-image: linear-gradient(90deg,$mp-danger 0,$mp-ibexa-primary);
+            color: $mp-white;
+
+            .icon {
+                fill: $mp-white;
+                opacity: 1;
+            }
+
+            .identifier {
+                color: $mp-white;
+            }
+        }
+    }
+
+    .modal {
+        .modal-header {
+            padding: 1rem;
+        }
+        .modal-body {
+            .name {
+                padding: 0 1rem;
+                font-weight: 700;
+            }
+            .identifier {
+                padding: 0 1rem;
+                color: $mp-medium-gray;
+                font-size: .75rem;
+                line-height: 1.125rem;
+            }
+            .list-of-blocks {
+                display: flex;
+                flex-direction: column;
+            }
+            .block-item {
+                background: $mp-lighter-gray;
+                border: .0625rem solid $mp-light-gray;
+                border-radius: .625rem;
+                padding: 1rem;
+                margin: 0.5rem 2rem;
+                text-align: left;
+            }
+        }
+    }
+
+    .mugopage-tabs {
+        padding: 0;
+        list-style: none;
+        margin: 2rem 0 0 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+        position: relative;
+        bottom: -1px;
+        overflow-x: auto;
+
+        .mugopage-tabitem {
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            height: 47px;
+            padding: 0 2.5rem 0 1.5rem;
+            margin-right: -0.25rem;
+            margin-left: 0;
+            color: inherit;
+            background: transparent;
+            border: 0.0625rem solid $mp-light-gray;
+            border-radius: 0.625rem 2.5rem 0 0;
+            background: $mp-lighter-gray;
+            position: relative;
+            transition: all 0.5s ease-in-out;
+
+            &:active, &:focus, &:hover {
+                background: $mp-white;
+                z-index: 1;
+            }
+
+            &[aria-expanded="true"] {
+                z-index: 2;
+                background: $mp-white;
+                border-bottom-color: $mp-white;
+            }
+        }
+    }
+
+    .mugopage-tabs-container {
+        width: 100%;
+        padding: 0;
+        margin: 0 0 1rem 0;
+        border: 0.0625rem solid $mp-mlight-gray;
+        border-radius: 0 0 0.625rem 0.625rem;
+        box-shadow: 0.25rem 1.375rem 2.9375rem 0 rgba(65, 145, 255, 0.1);
+        background-color: $mp-white;
+        padding: 2rem;
+    }
+
+    .add-new-block {
+        align-items: center;
+        border: .0625rem dashed $mp-mlight-gray;
+        border-radius: .625rem;
+        display: flex;
+        height: 5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        position: relative;
+
+        .btn {
+            justify-content: center;
+            min-width: 13.125rem;
+        }
+    }
+
+    .mugopage-input {
+        border: .0625rem solid $mp-mlight-gray;
+        border-radius: .625rem;
+        color: $mp-darker-gray;
+        font-size: .875rem;
+        line-height: 1.3125rem;
+        position: relative;
+        min-height: 3rem;
+        padding: 0.5rem;
+        transition: all 0.5s ease-in-out;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        &.blocked {
+            background: $mp-lighter-gray;
+            cursor: not-allowed;
+        }
+
+        &:hover, &:focus, &:active {
+            border-color: $mp-ibexa-primary;
+        }
+    }
+
+    .btn-mugopage-new-block {
+        min-width: 300px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background: $mp-white;
+        border: 1px solid $mp-light-blue;
+        color: $mp-light-blue;
+        padding: 1rem;
+        border-radius: .625rem;
+
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+            fill: $mp-light-blue;
+        }
+
+    }
+
+    .block-item {
+
+        .accordion-item {
+            background: $mp-white;
+            margin-bottom: 0.75rem;
+            border-radius: 0.625rem;
+            border: 0.0625rem solid $mp-light-gray;
+            box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+
+            &:hover, &:focus, &:active {
+                border-color: $mp-dark-gray;
+            }
+
+            .accordion-header {
+                box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+                border-radius: 0.625rem;
+                border-bottom: 0.0625rem solid $mp-light-gray;
+                padding: 0 1rem;
+                display: flex;
+                height: 3.3125rem;
+                align-items: center;
+                background: $mp-white;
+                justify-content: flex-start;
+                align-items: center;
+
+                .block-header-label {
+                    display: flex;
+                    flex: 1 1 auto;
+                    width: calc(100% - 9rem);
+                    overflow: hidden;
+                    margin: 0 1rem;
+                }
+            }
+
+            .accordion-body {
+                padding: 0.5rem 4rem 2rem 4rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .block-name {
+                white-space: nowrap;
+            }
+
+            .block-identifier {
+                flex: 1 1 auto;
+                padding-left: 0.5rem;
+                padding-top: .25rem;
+                color: $mp-medium-gray;
+                font-size: .75rem;
+            }
+
+            .mugopage-label {
+                margin-top: 2rem;
+            }
+
+            .mugopage-form-group {
+                .mugopage-label {
+                    margin-top: 0.5rem;
+                    flex: 0 1 100%;
+                    max-width: 160px;
+                    min-width: 160px;
+                }
+            }
+
+            .related-items-list {
+                padding: 1rem 0;
+            }
+
+            .btn-add-related-content-to-block {
+                max-width: 180px;
+            }
+
+            .mugopage-section-divider {
+                padding-top: 2rem;
+            }
+
+            .btn-accordion {
+                background: $mp-white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 2.2rem;
+                width: 2.2rem;
+                border-radius: 0.625rem;
+                border: 0.0625rem solid $mp-white;
+                transition: all .5s cubic-bezier(.25, .8, .25, 1);
+
+                .icon {
+                    width: 1rem;
+                    height: 1rem;
+                    transition: all .35s cubic-bezier(.25, .8, .25, 1);
+                }
+
+                &[aria-expanded="false"] {
+                    .icon {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                &:hover, &:active, &:focus {
+                    border-color: $mp-light-gray;
+                }
+
+                &.remove {
+                    &:hover, &:active, &:focus {
+                        border-color: $mp-danger;
+                        background: $mp-light-danger;
+
+                        .icon {
+                            fill: $mp-danger;
+                        }
+                    }
+                }
+
+                &.button-handler {
+                    cursor: grab;
+                    .icon {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+
+            }
+
+        }
+
+        fieldset, .content-fields {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &.sortable-chosen {
+
+            .accordion-item {
+
+                border: 0.0625rem solid $mp-light-blue;
+
+                .accordion-header,
+                .accordion-body {
+                    background: $mp-light-gray;
+                }
+
+                .button-handler {
+                    cursor: grabbing;
+                }
+
+            }
+
+        }
+
+        &.new-block {
+
+            .accordion-header {
+                animation-name: newItem;
+                animation-duration: 5s;
+            }
+
+        }
+
+    }
+
+    .mugopage-form-group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 0 -1rem;
+        padding: 0.25rem 1rem;
+        transition: all 0.5s ease-in-out;
+        background-color: $mp-white;
+
+        &:hover, &:active, &:focus {
+            background-color: $mp-lighter-gray;
+        }
+
+        .mugopage-label {
+            margin-top: 0.3rem;
+            flex: 0 1 160px;
+        }
+
+        .mugopage-input {
+            padding: 0.2rem 0.5rem;
+            min-height: unset;
+            flex: 1 1 auto;
+            border: none;
+        }
+    }
+
+    .content-related-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        border: 0.0625rem solid $mp-lighter-gray;
+        border-radius: 0.625rem;
+        background: $mp-white;
+        padding: 0.5rem 0.5rem 1rem 0.5rem;
+        margin: 0.5rem 0;
+
+        .content {
+            flex: 1 1 0;
+            padding: 0.4rem 0.5rem 0;
+
+            .mugopage-label {
+                margin-top: 0.5rem;
+            }
+
+            .row {
+                [class^="content-"] {
+                    line-height: 1;
+                    font-size: 0.875rem;
+                }
+            }
+        }
+    }
+
+    /**
+     * Specifics
+     */
+    .mugopage-layout-section {
+
+        .accordion-layout {
+            background: $mp-white;
+            margin-bottom: 0.75rem;
+            border-radius: 0.625rem;
+            border: 0.0625rem solid $mp-light-gray;
+            box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+
+            &:hover, &:focus, &:active {
+                border-color: $mp-dark-gray;
+            }
+
+            .accordion-header {
+                box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+                border-radius: 0.625rem;
+                border-bottom: 0.0625rem solid $mp-light-gray;
+                padding: 0 1rem;
+                display: flex;
+                height: 3.3125rem;
+                align-items: center;
+                background: $mp-white;
+                justify-content: center;
+                align-items: center;
+
+                .title {
+                    font-size: 0.875rem;
+                    color: $mp-darker-gray;
+                    line-height: 1.3125rem;
+                    flex: 1 1 100%;
+                    padding: 0 1rem;
+                }
+
+                .btn-choose-layout {
+                    width: initial;
+                    padding: 0 1rem;
+                    background: $mp-lighter-gray;
+
+                    &:hover, &:active, &:focus {
+                        border-color: $mp-light-blue;
+                    }
+
+                    span {
+                        white-space: nowrap;
+                        margin-right: .5rem;
+                    }
+                }
+            }
+
+            .accordion-body {
+                padding: 0.5rem 4rem 2rem 4rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .mugopage-section-information {
+                margin-top: 2rem;
+            }
+
+            .mugopage-section-divider {
+                margin-bottom: 1rem;
+            }
+
+            .layout-options-section {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .btn-accordion {
+                background: $mp-white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 2.2rem;
+                width: 2.2rem;
+                border-radius: 0.625rem;
+                border: 0.0625rem solid $mp-white;
+                transition: all .5s cubic-bezier(.25, .8, .25, 1);
+
+                span {
+                    font-size: 0.875rem;
+                    color: $mp-darker-gray;
+                    line-height: 1.3125rem;
+                }
+
+                .icon {
+                    width: 1rem;
+                    height: 1rem;
+                    transition: all .35s cubic-bezier(.25, .8, .25, 1);
+                }
+
+                &[aria-expanded="false"] {
+                    .icon {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                &:hover, &:active, &:focus {
+                    border-color: $mp-light-gray;
+                }
+
+                &.remove {
+                    &:hover, &:active, &:focus {
+                        border-color: $mp-danger;
+                        background: $mp-light-danger;
+
+                        .icon {
+                            fill: $mp-danger;
+                        }
+                    }
+                }
+
+                &.button-handler {
+                    cursor: grab;
+                    .icon {
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    .mugopage-zone-section {
+
+        .mugopage-section-divider {
+            padding-top: 0.5rem;
+        }
+
+        .blocks-section {
+            margin: 1rem 0;
+        }
+
+    }
+
+}
+
+/**
+ * Animations
+ */
+
+@keyframes newItem {
+    0%   {background-color: $mp-light-success;}
+    90%  {background-color: $mp-light-success;}
+    100% {background-color: $mp-white;}
+}

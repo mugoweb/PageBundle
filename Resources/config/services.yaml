@@ -1,0 +1,111 @@
+parameters:
+    mugopage.controller.class: Mugo\PageBundle\Controller\ConfigController
+    mugopage.pageService.class: Mugo\PageBundle\Services\PageService
+    mugopage_settings:
+        exclude_content_groups:
+            2: Users
+            3: Media
+            4: Setup
+        default_templates:
+            layout: 'ibexadesign/field_types/mugopage_default_layout.html.twig'
+            zone: 'ibexadesign/field_types/mugopage_default_zone.html.twig'
+            block: 'ibexadesign/field_types/mugopage_default_block.html.twig'
+        custom_attribute_types_available:
+            choice: 'Choice'
+            contentrelation: 'Content Relation'
+            integer: 'Integer'
+            string: 'String'
+            text: 'Text'
+
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+    Mugo\PageBundle\Form\Type\FieldType\MugoPageFieldType:
+        public: true
+        arguments:
+            - '@ibexa.api.service.field_type'
+        tags:
+            - { name: 'form.type' }
+    Mugo\PageBundle\FieldType\MugoPage\Type:
+        public: true
+        tags:
+            - { name: ibexa.field_type, alias: mugopage }
+    Mugo\PageBundle\Mapper\MugoPageFormDefinitionMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: mugopage }
+    Mugo\PageBundle\Mapper\MugoPageFormValueMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.value, fieldType: mugopage }
+    Mugo\PageBundle\Persistence\Legacy\Content\FieldValue\Converter\MugoPageConverter:
+        tags:
+            - {name: ibexa.field_type.storage.legacy.converter, alias: mugopage}
+    ibexa.field_type.indexable.mugopage:
+        class: Ibexa\Core\FieldType\TextBlock\SearchField
+        tags:
+            - { name: ibexa.field_type.indexable, alias: mugopage }
+    Mugo\PageBundle\EventListener\MenuListener:
+        arguments:
+            - "@security.authorization_checker"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    mugopage.config.controller:
+        public: true
+        class: Mugo\PageBundle\Controller\ConfigController
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
+        arguments:
+            $repository: '@ibexa.api.repository'
+            $mugoPageService: '@mugopage.service'
+            $contentService: '@ibexa.api.service.content'
+            $permissionResolver: '@Ibexa\Core\Repository\Permission\PermissionResolver'
+    Mugo\PageBundle\Controller\ConfigController: '@mugopage.config.controller'
+
+    mugopage.components.content_edit_form_after:
+        parent: Ibexa\AdminUi\Component\TwigComponent
+        arguments:
+            # yes! with @@ (double)
+            $template: '@@ibexadesign/mugopage/field_types/content_edit_form_after.html.twig'
+        tags:
+            - { name: ibexa.admin_ui.component, group: 'content-edit-form-after' }
+
+    mugopage.components.content_view_styles:
+        parent: Ibexa\AdminUi\Component\TwigComponent
+        arguments:
+            # yes! with @@ (double)
+            $template: '@@ibexadesign/mugopage/field_types/content_view_stylesheet_head.html.twig'
+        tags:
+            - { name: ibexa.admin_ui.component, group: 'stylesheet-head' }
+
+    mugopage.service:
+        class: 'Mugo\PageBundle\Services\MugoPageService'
+        public: true
+        arguments:
+            $entityManager: '@doctrine.orm.ibexa_default_entity_manager'
+            $contentTypeService: '@ibexa.api.service.content_type'
+            $container: '@service_container'
+            $contentService: '@ibexa.api.service.content'
+        tags:
+            - { name: monolog.logger, channel: mugopage_service }
+    Mugo\PageBundle\Service\MugoPageService: '@mugopage.service'
+
+    mugopage.twig.page_extension:
+        class: Mugo\PageBundle\Twig\Extension
+        arguments:
+            $container: '@service_container'
+            $repository: '@ibexa.api.repository'
+            $mugoPageService: '@mugopage.service'
+            $contentService: '@ibexa.api.service.content'
+            $twigEnvironment: '@twig'
+        public: true
+        tags:
+            - { name: twig.extension }
+#    mugopage_platform.components.script_body:
+#        parent: Ibexa\AdminUi\Component\ScriptComponent
+#        autowire: true
+#        autoconfigure: false
+#        arguments:
+#            $src: '/bundles/mugopage/js/admin/mugopage_platform.js'
+#        tags:
+#            - { name: ibexa.admin_ui.component, group: script-body }

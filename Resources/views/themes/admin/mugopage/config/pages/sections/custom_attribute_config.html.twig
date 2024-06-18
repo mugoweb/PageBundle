@@ -1,0 +1,37 @@
+<div class="new-custom-attribute">
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <button class="btn-accordion button-handler" type="button">
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#drag"></use>
+                </svg>
+            </button>
+            <div class="attribute-name">Attribute Name</div>
+            <button class="btn-accordion remove" type="button">
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#trash"></use>
+                </svg>
+            </button>
+            <button class="btn-accordion accordion-action" type="button" data-bs-toggle="collapse" data-bs-target="#" aria-expanded="true" aria-controls="">
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                </svg>
+            </button>
+        </div>
+        <div id="" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+                <!-- Custom fields go here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="new-custom-attribute-types">
+    {% if customAttributeTypes is defined and customAttributeTypes %}
+        {% for customAttributeId, customAttributeType in customAttributeTypes %}
+            {% include '@ibexadesign/mugopage/config/pages/custom_attribute_types/' ~ customAttributeId ~ '.html.twig' %}
+        {% endfor %}
+    {% else %}
+        There is no custom attribute defined!<br/>Check the installation notes to enable basic types
+    {% endif %}
+</div>

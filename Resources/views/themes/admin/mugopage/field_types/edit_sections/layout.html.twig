@@ -1,0 +1,92 @@
+<div class="mugopage-layout-section">
+
+    <div class="accordion-layout">
+        <div class="accordion-header">
+            <div class="mugopage-label">Layout:</div>
+            <div class="title"></div>
+            <button class="btn-accordion btn-choose-layout" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}-mugopage-select-layout-accordion" aria-expanded="{% if layouts is defined and layouts %}false{% else %}true{% endif %}" aria-controls="{{ id }}-mugopage-select-layout-accordion">
+                <span>Choose a Layout</span>
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                </svg>
+            </button>
+        </div>
+        <div id="{{ id }}-mugopage-select-layout-accordion" class="mugopage-select-layout-accordion accordion-collapse collapse {% if layouts is defined and layouts %}initially-collapsed{% else %}show{% endif %}">
+            <div class="accordion-body">
+
+                {% if layouts is defined and layouts %}
+
+                    <div class="mugopage-section-information">
+                        <svg class="icon">
+                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#information"></use>
+                        </svg>
+                        <div class="content">
+                            Selecting a new layout will remove any existing zone and block configuration and create new ones. Ensure this is really what you want before choosing a new layout.
+                        </div>
+                    </div>
+
+                    <div class="mugopage-section-divider">Available Layouts:</div>
+
+                    <div class="layout-options-section">
+                        {% for layout in layouts %}
+                            <button type="button" class="layout-item"
+                                    data-identifier="{{ layout.identifier }}"
+                                    data-name="{{ layout.data.name }}"
+                                    data-contenttypes="{% if layout.data.contenttypes is defined and layout.data.contenttypes %}{{ layout.data.contenttypes|join('|#|') }}{% endif %}"
+                                    data-zones="{% if layout.data.zones is defined and layout.data.zones %}{{ layout.data.zones|join('|#|') }}{% endif %}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#{{ id }}-modal-confirm-layout-change">
+
+                                <svg class="icon">
+                                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#checkmark"></use>
+                                </svg>
+                                <div class="content">
+                                    <div class="name">{{ layout.data.name }}</div>
+                                    <div class="identifier">{{ layout.identifier }}</div>
+                                </div>
+
+                            </button>
+                        {% endfor %}
+                    </div>
+
+                    <div id="{{ id }}-modal-confirm-layout-change" class="modal modal-confirm-layout-change" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Set layout?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to set up this new layout?</p>
+                                    <p>Selecting a new layout will remove any existing zone and block configuration and create new ones.</p>
+                                    <p>
+                                    <div class="name">Name</div>
+                                    <div class="identifier">identifier</div>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary btn-confirm-layout-change">Yes, set the layout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <div class="mugopage-section-information">
+                        <svg class="icon">
+                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#information"></use>
+                        </svg>
+                        <div class="content">
+                            <strong>There are no layouts available!</strong><br/>Create a new layout or check the layout configurations in the <a href="{{ path('mugopage_config.layouts') }}">Layout Config</a> page.
+                        </div>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</div>

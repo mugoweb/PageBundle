@@ -1,0 +1,39 @@
+<div class="related-content-section">
+    <label class="mugopage-label">{{ fieldData.name }}</label>
+    <div data-name="{{ fieldData.identifier }}" data-choicetype="{{ fieldData.choicetype }}" data-type="{{ fieldData.type }}" data-name="{{ fieldData.identifier }}" data-options="{{ fieldData.options|e('html_attr') }}">
+        {% set options = fieldData.options|split("\n") %}
+        {% if fieldData.choicetype == 'select' %}
+            <select>
+                {% for index,option in options %}
+                    {% set option = option|trim %}
+                    {% if option != '' %}
+                        <option value="{{ index }}">{{ option }}</label>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        {% elseif fieldData.choicetype == 'select_multiple' %}
+            <select multiple>
+                {% for index,option in options %}
+                    {% set option = option|trim %}
+                    {% if option != '' %}
+                        <option value="{{ index }}">{{ option }}</label>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        {% elseif fieldData.choicetype == 'radio' %}
+            {% for index,option in options %}
+                {% set option = option|trim %}
+                {% if option != '' %}
+                    <label class="d-block mb-1"><input type="radio" name="{{ fieldData.identifier }}" value="{{ index }}" />{{ option }}</label>
+                {% endif %}
+            {% endfor %}
+        {% elseif fieldData.choicetype == 'checkbox' %}
+            {% for index,option in options %}
+                {% set option = option|trim %}
+                {% if option != '' %}
+                <label class="d-block mb-1"> <input type="checkbox" name="{{ fieldData.identifier }}[]" value="{{ index }}">{{ option }}</label>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

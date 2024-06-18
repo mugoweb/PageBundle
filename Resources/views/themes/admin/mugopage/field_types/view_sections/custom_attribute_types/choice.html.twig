@@ -1,0 +1,12 @@
+<label class="mugopage-label custom-attribute">{{ fieldData.name }}<span>({{ fieldData.identifier }})</span></label>
+<div class="mugopage-badge"><span>{{ fieldData.type }}</span></div>
+<div class="mugopage-input">
+    <ul>
+    {% set selectedOptions = fieldData.value|split(',') %}
+    {% for index,option in fieldData.options|split("\n") %}
+        {% if index|number_format(0) in selectedOptions %}
+            <li>{{ option }}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</div>

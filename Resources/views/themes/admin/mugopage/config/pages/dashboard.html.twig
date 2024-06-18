@@ -1,0 +1,64 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{%- block title -%}
+    {% if blockTitle is defined and blockTitle %}
+        {{ blockTitle }}
+    {% else %}
+        {{ 'MugoPage'|trans }}
+    {% endif %}
+{%- endblock -%}
+
+{%- block breadcrumbs -%}
+    {% if breadcrumbItems is defined and breadcrumbItems %}
+        {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: breadcrumbItems } %}
+    {% endif %}
+{%- endblock -%}
+
+{%- block header -%}
+
+    {% set title = 'MugoPage'|trans %}
+    {% if blockTitle is defined and blockTitle %}
+        {% set title = blockTitle%}
+    {% endif %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: title,
+    } %}
+
+{%- endblock -%}
+
+{%- block content -%}
+
+    <section class="container ibexa-container mugopage dashboard">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-6 col-lg-5 offset-lg-1 col-xl-4 offset-xl-2 order-1">
+                <img class="image" src="{{ asset( 'bundles/mugopage/images/computer.jpg' ) }}" />
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+
+                <h2>Welcome to MugoPage Config</h2>
+                <p>Use the configuration pages to create/edit:</p>
+                <ul>
+                    <li>
+                        <a href="{{ path('mugopage_config.layouts') }}">Layouts</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mugopage_config.zones') }}">Zones</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mugopage_config.blocks') }}">Blocks</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-dashboard-js', null, 'ibexa') }}
+{%- endblock -%}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('mugopage-config', null, 'ibexa') }}
+{% endblock %}

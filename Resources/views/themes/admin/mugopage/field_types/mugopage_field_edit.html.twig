@@ -1,0 +1,34 @@
+{% extends '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% trans_default_domain 'content_edit' %}
+
+{% block ezplatform_fieldtype_mugopage_widget %}
+    {% set layouts = get_mugopage_layouts() %}
+    {% set zones = get_mugopage_zones() %}
+    {% set blocks = get_mugopage_blocks() %}
+    {% set relatedContentArray = get_related_content(value) %}
+
+    <section class="mugopage mugopage-edit-field-section">
+
+        <div class="mugopage-ibexa-field">
+            {{ block('textarea_widget') }}
+        </div>
+
+        {% include '@ibexadesign/mugopage/field_types/edit_sections/layout.html.twig' %}
+        {% include '@ibexadesign/mugopage/field_types/edit_sections/zone.html.twig' %}
+        {% include '@ibexadesign/mugopage/field_types/edit_sections/block.html.twig' %}
+
+        <div class="related-content-to-load d-none">
+            {% if relatedContentArray is defined and relatedContentArray %}
+                {% for relatedContent in relatedContentArray %}
+                    <div data-contentid="{{ relatedContent.content_id }}"
+                         data-locationid="{{ relatedContent.location_id }}"
+                         data-identifier="{{ relatedContent.identifier }}"
+                         data-name="{{ relatedContent.name }}"></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </section>
+
+{% endblock %}

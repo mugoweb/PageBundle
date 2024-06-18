@@ -1,0 +1,91 @@
+<div class="mugopage-zone-section d-none">
+
+    <ul class="mugopage-tabs">
+        {% if zones is defined and zones %}
+            {% for zone in zones %}
+                <li>
+                    <button type="button"
+                            class="mugopage-tabitem"
+                            data-identifier="{{ zone.identifier }}"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{ id }}-zone-{{ loop.index }}"
+                            aria-expanded="false"
+                            aria-controls="{{ id }}-zone-{{ loop.index }}"
+                    >{{ zone.data.name }}</button>
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+    <div id="{{ id }}-tab-container" class="mugopage-tabs-container">
+
+        {% if zones is defined and zones %}
+            {% for zone in zones %}
+
+                <div id="{{ id }}-zone-{{ loop.index }}"
+                     class="accordion-collapse collapse"
+                     data-identifier="{{ zone.identifier }}"
+                     data-bs-parent="#{{ id }}-tab-container">
+
+                    <div class="mugopage-section-divider">Blocks in {{ zone.data.name }} ({{ zone.identifier }})</div>
+
+                    <div class="blocks-section">
+
+                        <!-- Blocks go here -->
+
+                    </div>
+
+                    <div class="add-new-block">
+                        <button class="btn btn-mugopage-new-block"
+                                type="button"
+                                data-identifier="{{ zone.identifier }}"
+                                data-name="{{ zone.data.name }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#{{ id }}-modal-add-block-to-zone">
+                            <svg class="icon">
+                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#create"></use>
+                            </svg>
+                            <span>Add new block</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+    <div id="{{ id }}-modal-add-block-to-zone" class="modal modal-add-block-to-zone" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add block?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="info">Select one of the available blocks for <strong></strong> zone.</p>
+                    <div class="list-of-blocks">
+                        {% if blocks is defined and blocks %}
+                            {% for block in blocks %}
+                                <button type="button"
+                                        class="block-item"
+                                        data-contenttypes="{% if block.data.contenttypes is defined and block.data.contenttypes %}{{ block.data.contenttypes|join('|#|') }}{% endif %}"
+                                        data-zones="{% if block.data.zones is defined and block.data.zones %}{{ block.data.zones|join('|#|') }}{% endif %}"
+                                        data-identifier="{{ block.identifier }}"
+                                >
+                                    <div class="name">{{ block.data.name }}</div>
+                                    <div class="identifier">{{ block.identifier }}</div>
+                                </button>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

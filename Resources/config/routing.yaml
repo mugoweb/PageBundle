@@ -1,0 +1,48 @@
+mugopage_config.dashboard:
+    path: /mugopage
+    defaults:
+        template: '@ibexadesign/mugopage/config/pages/dashboard.html.twig'
+        _controller: mugopage.config.controller::renderDashboardAction
+
+mugopage_config.layouts:
+    path: /mugopage/layouts
+    defaults:
+        template: '@ibexadesign/mugopage/config/pages/layouts.html.twig'
+        _controller: mugopage.config.controller::renderLayoutsAction
+
+mugopage_config.zones:
+    path: /mugopage/zones
+    defaults:
+        template: '@ibexadesign/mugopage/config/pages/zones.html.twig'
+        _controller: mugopage.config.controller::renderZonesAction
+
+mugopage_config.blocks:
+    path: /mugopage/blocks
+    defaults:
+        template: '@ibexadesign/mugopage/config/pages/blocks.html.twig'
+        _controller: mugopage.config.controller::renderBlocksAction
+
+mugopage_config.layouts.save:
+    path: /mugopage/layouts/save
+    defaults:
+        _controller: mugopage.config.controller::saveLayoutAction
+
+mugopage_config.zones.save:
+    path: /mugopage/zones/save
+    defaults:
+        _controller: mugopage.config.controller::saveZoneAction
+
+mugopage_config.blocks.save:
+    path: /mugopage/blocks/save
+    defaults:
+        _controller: mugopage.config.controller::saveBlockAction
+
+mugopage_config.delete.item:
+    path: /mugopage/delete/item
+    defaults:
+        _controller: mugopage.config.controller::deleteAction
+
+mugopage_platform.get_related_items_data:
+    path: /mugopage_platform/get-related-items-data
+    defaults:
+        _controller: mugopage_platform.controller::getRelatedItemsDataAction

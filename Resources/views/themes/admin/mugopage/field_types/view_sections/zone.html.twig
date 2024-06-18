@@ -1,0 +1,44 @@
+{% if layout.zones is defined and layout.zones %}
+
+    <div class="mugopage-zone-section">
+
+        <ul class="mugopage-tabs">
+
+            {% for zone in layout.zones  %}
+
+                <li>
+                    <button type="button"
+                            class="mugopage-tabitem"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{ attributeIdentifier }}-zone-{{ loop.index }}"
+                            aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}"
+                            aria-controls="{{ attributeIdentifier }}-zone-{{ loop.index }}">{{ zone.name }}
+                    </button>
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+       <div id="{{ attributeIdentifier }}-tab-container" class="mugopage-tabs-container">
+
+           {% for zone in layout.zones  %}
+
+               <div id="{{ attributeIdentifier }}-zone-{{ loop.index }}" class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}" data-bs-parent="#{{ attributeIdentifier }}-tab-container">
+
+                   {% set zoneIdentifier = 'zone' ~ loop.index  %}
+                   {% include '@ibexadesign/mugopage/field_types/view_sections/block.html.twig' %}
+
+               </div>
+
+           {% endfor %}
+
+       </div>
+
+    </div>
+
+{% else %}
+
+    <div class="mugopage-empty">No zone</div>
+
+{% endif %}

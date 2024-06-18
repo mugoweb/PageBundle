@@ -1,0 +1,88 @@
+<div class="mugopage-default-template-section">
+
+    <div class="mugopage-default-template-title">Default Block Template</div>
+
+    {% if block is defined and block %}
+
+        <div class="mugopage-default-template-subtitle">Properties</div>
+
+        <div class="mugopage-default-template-group">
+            <label>name</label>
+            <div>{% if block.name is defined and block.name %}{{ block.name }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>id</label>
+            <div>{% if block.id is defined and block.id %}{{ block.id }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>identifier</label>
+            <div>{% if block.identifier is defined and block.identifier %}{{ block.identifier }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>type</label>
+            <div>{% if block.type is defined and block.type %}{{ block.type }}{% endif %}</div>
+        </div>
+
+        {% set configArray = parse_stdclass_to_array(block.config) %}
+
+        <div class="mugopage-default-template-subtitle">Config</div>
+        {% for blockKey, blockValue in configArray %}
+
+            {% if blockValue is not iterable %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ blockKey }}</label>
+                    <div>{{ blockValue }}</div>
+                </div>
+            {% else %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ blockKey }}</label>
+                    <div>
+                        {% if blockKey == 'allzones' or blockKey == 'availablecontenttypeids' %}
+                            <ul>
+                                {% for key, value in blockValue  %}
+                                    <li>{{ value }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% elseif blockKey == 'availablecontenttypes' %}
+                            <ul>
+                                {% for key, value in blockValue  %}
+                                    <li>{{ value.id }} | {{ value.name }} ({{ value.identifier }})</li>
+                                {% endfor %}
+                            </ul>
+                        {% elseif blockKey == 'attr' %}
+                            <ul>
+                                {% for key, value in blockValue  %}
+                                    <li>{{ value.type }} | {{ value.name }} ({{ value.identifier }})</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            << iterable >>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+        <div class="mugopage-default-template-subtitle">Related Content</div>
+        {% for relatedcontent in block.relatedcontent %}
+            <div class="mugopage-default-template-group">
+                <label>{{ relatedcontent.identifier }}</label>
+                <div>{{ relatedcontent.name }} | l: {{ relatedcontent.location_id }} | c: {{ relatedcontent.content_id }}</div>
+            </div>
+        {% endfor %}
+
+        <div class="mugopage-default-template-subtitle">Attributes</div>
+        {% for customattribute in block.attr %}
+            <div class="mugopage-default-template-group">
+                <label><i>{{ customattribute.type }}</i><br/>{{ customattribute.name }}<br/>({{ customattribute.identifier }})</label>
+                <div>{{ customattribute.value }}</div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+</div>

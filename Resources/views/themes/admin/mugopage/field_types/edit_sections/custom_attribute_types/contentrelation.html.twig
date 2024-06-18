@@ -1,0 +1,44 @@
+<div class="related-content-section">
+    <label class="mugopage-label">{{ fieldData.name }}</label>
+    <div class="related-items-list" data-type="{{ fieldData.type }}" data-identifier="{{ fieldData.identifier }}">
+        <span class="empty">No Content Related</span>
+    </div>
+    <div class="content-related-repo d-none">
+        <div class="content-related-item">
+            <button class="btn-accordion button-handler-relation" type="button">
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#drag"></use>
+                </svg>
+            </button>
+            <div class="content">
+                <div class="content-name">Content Name</div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label class="mugopage-label">identifier</label>
+                        <div class="content-identifier">article</div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="mugopage-label">loc #</label>
+                        <div class="content-location-id">123</div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="mugopage-label">cont #</label>
+                        <div class="content-content-id">323</div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="btn-accordion remove" type="button">
+                <svg class="icon">
+                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#discard"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-add-related-content-to-block open-udw"
+        data-udw-title="{{ fieldData.name }}"
+        data-udw-allowedtypes="{% if fieldData.allowedtypes is defined and fieldData.allowedtypes %}{{ get_allowed_content_identifiers(fieldData.allowedtypes)|json_encode() }}{% endif %}"
+        data-udw-maximumitems="{{ fieldData.maximumitems }}"
+        data-udw-config="{{ ibexa_udw_config( 'multiple') }}">Add Related Items</button>
+</div>

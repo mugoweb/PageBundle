@@ -1,0 +1,18 @@
+{% trans_default_domain "content_fields" %}
+
+{% extends "@IbexaCore/content_fields.html.twig" %}
+
+{% block mugopage_field %}
+
+    {% set fieldContentObject = get_field_content_object(field.value) %}
+    {% set attributeIdentifier = field.fieldDefIdentifier %}
+
+    <section class="mugopage mugopage-view-field-section">
+
+        {% include '@ibexadesign/mugopage/field_types/view_sections/layout.html.twig' %}
+
+    </section>
+
+{#    <p>See https://github.com/ibexa/core/blob/main/src/bundle/Core/Resources/views/content_fields.html.twig#L486</p>#}
+{#    <p>and https://doc.ibexa.co/en/latest/content_management/field_types/form_and_template/#template-variables</p>#}
+{% endblock %}

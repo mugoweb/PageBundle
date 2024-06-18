@@ -1,0 +1,21 @@
+role.policy.mugopage_config: MugoPage Config
+role.policy.mugopage_config.all_functions: All functions
+role.policy.mugopage_config.read: View MugoPage Config
+
+role.policy.mugopage_config_zones: MugoPage Config Zones
+role.policy.mugopage_config_zones.all_functions: All functions
+role.policy.mugopage_config_zones.read: Read Zones
+role.policy.mugopage_config_zones.edit: Edit Zones
+role.policy.mugopage_config_zones.delete: Delete Zones
+
+role.policy.mugopage_config_layouts: MugoPage Config Layouts
+role.policy.mugopage_config_layouts.all_functions: All functions
+role.policy.mugopage_config_layouts.read: Read Layouts
+role.policy.mugopage_config_layouts.edit: Edit Layouts
+role.policy.mugopage_config_layouts.delete: Delete Layouts
+
+role.policy.mugopage_config_blocks: MugoPage Config Blocks
+role.policy.mugopage_config_blocks.all_functions: All functions
+role.policy.mugopage_config_blocks.read: Read Blocks
+role.policy.mugopage_config_blocks.edit: Edit Blocks
+role.policy.mugopage_config_blocks.delete: Delete Blocks

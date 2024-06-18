@@ -1,0 +1,126 @@
+<div class="mugopage-default-template-section">
+
+    <div class="mugopage-default-template-title">Default Layout Template</div>
+
+    {% if layout is defined and layout %}
+
+        <div class="mugopage-default-template-subtitle">Properties</div>
+
+        <div class="mugopage-default-template-group">
+            <label>name</label>
+            <div>{% if layout.name is defined and layout.name %}{{ layout.name }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>identifier</label>
+            <div>{% if layout.identifier is defined and layout.identifier %}{{ layout.identifier }}{% endif %}</div>
+        </div>
+
+        <div class="mugopage-default-template-group">
+            <label>type</label>
+            <div>{% if layout.type is defined and layout.type %}{{ layout.type }}{% endif %}</div>
+        </div>
+
+        {% set configArray = parse_stdclass_to_array(layout.config) %}
+
+        <div class="mugopage-default-template-subtitle">Config</div>
+        {% for layoutKey, layoutValue in configArray %}
+
+            {% if layoutValue is not iterable %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ layoutKey }}</label>
+                    <div>{{ layoutValue }}</div>
+                </div>
+            {% else %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ layoutKey }}</label>
+                    <div>
+                        {% if layoutKey == 'zoneids' or layoutKey == 'availablecontenttypeids' %}
+                            <ul>
+                                {% for key, value in layoutValue  %}
+                                    <li>{{ value }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% elseif layoutKey == 'availablecontenttypes' %}
+                            <ul>
+                                {% for key, value in layoutValue  %}
+                                    <li>{{ value.id }} | {{ value.name }} ({{ value.identifier }})</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            << iterable >>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+        <div class="mugopage-default-template-subtitle">Zones</div>
+
+        {% if parameters is not defined %}
+            {% set parameters = [] %}
+        {% endif %}
+
+        {% if zones is defined and zones %}
+            {% for zone in zones %}
+                {{ render_mugopage_zone(zone, parameters, true) }}
+            {% endfor %}
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+<style>
+
+    .mugopage-default-template-section {
+        border-radius: 0.625rem;
+        border: 0.0625rem solid #f3f3f6;
+        padding: 2rem;
+        margin: 2rem;
+        background: #ffffff;
+    }
+
+    .mugopage-default-template-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        border-bottom: 0.0625rem solid #f3f3f6;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        color: #000000;
+    }
+
+    .mugopage-default-template-subtitle {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #000000;
+        margin-top: 2rem;
+    }
+
+    .mugopage-default-template-group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 1rem 0;
+    }
+
+    .mugopage-default-template-group:hover {
+        background: #f2f2f2;
+    }
+
+    .mugopage-default-template-group label {
+        font-size: 0.75rem;
+        flex: 1 1 100%;
+        max-width: 150px;
+        margin-right: 1rem;
+        color: #333333;
+    }
+
+    .mugopage-default-template-group div {
+        font-size: 0.875rem;
+        flex: 1 1 auto;
+        color: #000000;
+    }
+
+</style>

@@ -1,0 +1,269 @@
+/**
+ * Colors
+ */
+$mp-lighter-gray: #f3f3f6;
+$mp-light-gray: #e0e0e8;
+$mp-mlight-gray: #cfd1d3;
+$mp-medium-gray: #71767c;
+$mp-dark-gray: #333333;
+$mp-darker-gray: #131c26;
+$mp-black: #000000;
+$mp-light-blue: #4191ff;
+$mp-white: #ffffff;
+$mp-danger: #db0032;
+$mp-light-danger: #fbe5ea;
+$mp-light-success: #E4F4E8;
+$mp-ibexa-primary: #ae1164;
+
+.mugopage.mugopage-view-field-section {
+
+    /**
+     * generics
+     */
+    .mugopage-label {
+        color: $mp-medium-gray;
+        font-size: .75rem;
+        margin: 0;
+        padding: 0;
+
+        &.custom-attribute {
+            font-weight: 700;
+
+            span {
+                margin-left: 0.5rem;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .mugopage-badge {
+        span {
+            font-size: .75rem;
+            background: $mp-mlight-gray;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.3rem;
+            color: $mp-black;
+            font-weight: bold;
+        }
+    }
+
+    .mugopage-input {
+        word-wrap: anywhere;
+    }
+
+    .mugopage-text {
+
+    }
+
+    .mugopage-smalltext {
+        color: $mp-medium-gray;
+        font-size: .75rem;
+    }
+
+    .mugopage-empty {
+        font-style: italic;
+        background: $mp-lighter-gray;
+        padding: 1rem;
+        border-radius: 0.625rem;
+    }
+
+    .mugopage-layout-section {
+        padding: .5rem 0 1rem 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-bottom: 1px solid $mp-mlight-gray;
+
+        .mugopage-text {
+            padding: 0 0.5rem;
+        }
+
+        .mugopage-smalltext {
+            padding-top: .25rem;
+        }
+    }
+
+    .mugopage-tabs {
+        padding: 0;
+        list-style: none;
+        margin: 2rem 0 0 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+        position: relative;
+        bottom: -1px;
+        overflow-x: auto;
+
+        .mugopage-tabitem {
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            height: 47px;
+            padding: 0 2.5rem 0 1.5rem;
+            margin-right: -0.25rem;
+            margin-left: 0;
+            color: inherit;
+            background: transparent;
+            border: 0.0625rem solid $mp-light-gray;
+            border-radius: 0.625rem 2.5rem 0 0;
+            background: $mp-lighter-gray;
+            position: relative;
+            transition: all 0.5s ease-in-out;
+
+            &:active, &:focus, &:hover {
+                background: $mp-white;
+                z-index: 1;
+            }
+
+            &[aria-expanded="true"] {
+                z-index: 2;
+                background: $mp-white;
+                border-bottom-color: $mp-white;
+            }
+        }
+    }
+
+    .mugopage-tabs-container {
+        width: 100%;
+        padding: 0;
+        margin: 0 0 1rem 0;
+        border: 0.0625rem solid $mp-mlight-gray;
+        border-radius: 0 0 0.625rem 0.625rem;
+        box-shadow: 0.25rem 1.375rem 2.9375rem 0 rgba(65, 145, 255, 0.1);
+        background-color: $mp-white;
+        padding: 2rem;
+    }
+
+    .mugopage-section-divider {
+        padding: 2rem 0 .5rem 0;
+        font-size: .75rem;
+        font-weight: 700;
+        border-bottom: 1px solid $mp-mlight-gray;
+    }
+
+    .block-item {
+
+        .accordion-item {
+            background: $mp-white;
+            margin-bottom: 0.75rem;
+            border-radius: 0.625rem;
+            border: 0.0625rem solid $mp-light-gray;
+            box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+
+            &:hover, &:focus, &:active {
+                border-color: $mp-dark-gray;
+            }
+
+            .accordion-header {
+                box-shadow: 0.25rem 1.375rem 1.1875rem -0.625rem rgba(65, 145, 255, 0.05);
+                border-radius: 0.625rem;
+                border-bottom: 0.0625rem solid $mp-light-gray;
+                padding: 0 1rem;
+                display: flex;
+                height: 3.3125rem;
+                align-items: center;
+                background: $mp-white;
+                justify-content: flex-start;
+                align-items: center;
+
+                .block-header-label {
+                    display: flex;
+                    flex: 1 1 auto;
+                    width: calc(100% - 9rem);
+                    overflow: hidden;
+                    margin: 0 1rem;
+                }
+            }
+
+            .accordion-body {
+                padding: 0.5rem 4rem 2rem 4rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .block-name {
+                white-space: nowrap;
+            }
+
+            .block-identifier {
+                flex: 1 1 auto;
+                padding-left: 0.5rem;
+                padding-top: .25rem;
+                color: $mp-medium-gray;
+                font-size: .75rem;
+            }
+
+            .mugopage-label {
+                margin-top: 2rem;
+            }
+
+            .block-properties {
+                .mugopage-input {
+                    font-size: 0.875rem;
+                }
+            }
+
+            .mugopage-section-divider {
+                padding-top: 2rem;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+
+                .content {
+                    background: $mp-lighter-gray;
+                    border-radius: 0.625rem;
+                    border: 0.0625rem solid $mp-light-gray;
+                    padding: 1rem;
+                    margin: 0.5rem 0;
+
+                    .mugopage-label {
+                        margin-top: 0.5rem;
+                    }
+                }
+            }
+
+            .btn-accordion {
+                background: $mp-white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 2.2rem;
+                width: 2.2rem;
+                border-radius: 0.625rem;
+                border: 0.0625rem solid $mp-white;
+                transition: all .5s cubic-bezier(.25, .8, .25, 1);
+
+                .icon {
+                    width: 1rem;
+                    height: 1rem;
+                    transition: all .35s cubic-bezier(.25, .8, .25, 1);
+                }
+
+                &[aria-expanded="false"] {
+                    .icon {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                &:hover, &:active, &:focus {
+                    border-color: $mp-light-gray;
+                }
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Specifics
+     */
+
+}

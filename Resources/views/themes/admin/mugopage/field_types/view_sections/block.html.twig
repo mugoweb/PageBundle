@@ -1,0 +1,101 @@
+{% if zone.blocks is defined and zone.blocks %}
+
+    {% for block in zone.blocks %}
+
+        <div class="block-item">
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <div class="block-header-label">
+                        <div class="block-name">{{ block.name }}</div>
+                        <div class="block-identifier">{{ block.id }}</div>
+                    </div>
+                    <button class="btn-accordion accordion-action collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ block.id }}-block-{{ loop.index  }}" aria-expanded="false" aria-controls="{{ block.id }}-block-{{ loop.index }}">
+                        <svg class="icon">
+                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div id="{{ block.id }}-block-{{ loop.index  }}" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <div class="mugopage-section-divider">Block Config Properties</div>
+
+                                <div class="row block-properties">
+
+                                    <div class="col-12 col-lg-4">
+                                        <label class="mugopage-label">Block Type Name</label>
+                                        <div class="mugopage-input">{{ block.config.name }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4">
+                                        <label class="mugopage-label">Block Type Identifier</label>
+                                        <div class="mugopage-input">{{ block.config.identifier }}</div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4">
+                                        <label class="mugopage-label">Block Type Template</label>
+                                        <div class="mugopage-input">{{ block.config.template }}</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="mugopage-label full">Block Type Description</label>
+                                        <div class="mugopage-input">{{ block.config.description|nl2br() }}</div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 col-lg-6 pe-lg-5">
+
+                                <div class="mugopage-section-divider">Block Data</div>
+
+                                <label class="mugopage-label">Name</label>
+                                <div class="mugopage-input">{{ block.name }}</div>
+
+                                <label class="mugopage-label">ID</label>
+                                <div class="mugopage-input">{{ block.id }}</div>
+
+                            </div>
+
+                            <div class="col-12 col-lg-6 ps-lg-5">
+
+                                <div class="mugopage-section-divider">Block Attributes</div>
+
+                                {% if block.attr is defined and block.attr %}
+
+                                    {% for customFieldKey, customFieldData in block.attr %}
+
+                                        {% include '@ibexadesign/mugopage/field_types/view_sections/custom_attribute_types/' ~ customFieldData.type ~ '.html.twig'
+                                            with { fieldKey: customFieldKey, fieldData: customFieldData } %}
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <div class="font-italic">No attribute</div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="mugopage-empty">No block</div>
+
+{% endif %}

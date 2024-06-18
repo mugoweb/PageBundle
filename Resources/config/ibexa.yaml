@@ -1,0 +1,11 @@
+ibexa:
+    system:
+        admin_group:
+            admin_ui_forms:
+                content_edit_form_templates:
+                    -   template: '@ibexadesign/mugopage/field_types/mugopage_field_edit.html.twig'
+                        priority: 10
+            field_templates:
+                -   template: '@ibexadesign/mugopage/field_types/mugopage_field_view.html.twig'
+                    # Priority is optional (default is 0). The higher it is, the higher your template gets in the list.
+                    priority: 10
