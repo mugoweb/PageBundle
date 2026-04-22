@@ -1,0 +1,10 @@
+{% extends "@IbexaCore/content_fields.html.twig" %}
+
+{% block mugopage_field %}
+
+    {% set fieldContentObject = get_field_content_object(field.value) %}
+    {% set attributeIdentifier = field.fieldDefIdentifier %}
+
+    {{ render_mugopage_layout(fieldContentObject) }}
+
+{% endblock %}

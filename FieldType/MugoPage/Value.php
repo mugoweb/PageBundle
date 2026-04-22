@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle\FieldType\MugoPage;
+namespace MugoWeb\PageBundle\FieldType\MugoPage;
 
 use Ibexa\Core\FieldType\TextLine\Value as TextLineValue;
 

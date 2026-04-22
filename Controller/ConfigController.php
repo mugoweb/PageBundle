@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle\Controller;
+namespace MugoWeb\PageBundle\Controller;
 
 use Ibexa\Contracts\AdminUi\Controller\Controller;
 use \Symfony\Component\HttpFoundation\Request;
@@ -14,33 +14,33 @@ use \Ibexa\Contracts\Core\Repository\PermissionResolver;
 class ConfigController extends Controller
 {
 
-	/**
-	 * @var \Ibexa\Contracts\Core\Repository\Repository
-	 */
-	private $repository;
+    /**
+     * @var \Ibexa\Contracts\Core\Repository\Repository
+     */
+    private $repository;
 
-	/**
-	 * @var \Mugo\PageBundle\Services\MugoPageService
-	 */
-	private $mugoPageService;
+    /**
+     * @var \MugoWeb\PageBundle\Services\MugoPageService
+     */
+    private $mugoPageService;
 
-	/**
-	 * @var \Ibexa\Contracts\Core\Repository\ContentService
-	 */
-	private $contentService;
+    /**
+     * @var \Ibexa\Contracts\Core\Repository\ContentService
+     */
+    private $contentService;
 
-	/**
-	 * @var \Ibexa\Contracts\Core\Repository\PermissionResolver
-	 */
-	private $permissionResolver;
+    /**
+     * @var \Ibexa\Contracts\Core\Repository\PermissionResolver
+     */
+    private $permissionResolver;
 
 
     public function __construct($repository, $mugoPageService, $contentService, $permissionResolver)
     {
-		$this->repository = $repository;
+        $this->repository = $repository;
         $this->mugoPageService = $mugoPageService;
         $this->contentService = $contentService;
-		$this->permissionResolver = $permissionResolver;
+        $this->permissionResolver = $permissionResolver;
     }
 
     public function performAccessCheck(): void
@@ -49,302 +49,302 @@ class ConfigController extends Controller
         $this->denyAccessUnlessGranted(new Attribute('mugopage_platform', 'admin'));
     }
 
-	/**
-	 * Renders the MugoPage config Dashboard page
-	 *
-	 * @param String $template
-	 * @return Response
-	 */
+    /**
+     * Renders the MugoPage config Dashboard page
+     *
+     * @param String $template
+     * @return Response
+     */
     public function renderDashboardAction( String $template ): Response
-	{
+    {
 
-		// checks permission
-		parent::performAccessCheck();
-		$this->denyAccessUnlessGranted(
-			new Attribute('mugopage_config', 'read')
-		);
+        // checks permission
+        parent::performAccessCheck();
+        $this->denyAccessUnlessGranted(
+            new Attribute('mugopage_config', 'read')
+        );
 
-		$breadcrumbItems = array(
-			array('value' => 'MugoPage Config Dashboard'),
-		);
+        $breadcrumbItems = array(
+            array('value' => 'MugoPage Config Dashboard'),
+        );
 
         $params = array(
             'blockTitle' => 'MugoPage Config Dashboard',
             'breadcrumbItems' => $breadcrumbItems
-		);
+        );
 
-		$request  = Request::createFromGlobals();
+        $request  = Request::createFromGlobals();
         return $this->render($template, $params );
 
     }
 
-	/**
-	 * Prepare content and render the layout config page
-	 */
-	public function renderLayoutsAction( String $template ): Response
-	{
+    /**
+     * Prepare content and render the layout config page
+     */
+    public function renderLayoutsAction( String $template ): Response
+    {
 
-		// checks permission
-		parent::performAccessCheck();
-		$this->denyAccessUnlessGranted(
-			new Attribute('mugopage_config_layouts', 'read')
-		);
+        // checks permission
+        parent::performAccessCheck();
+        $this->denyAccessUnlessGranted(
+            new Attribute('mugopage_config_layouts', 'read')
+        );
 
-		$breadcrumbItems = array(
-			array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
-			array('value' => 'Layouts'),
-		);
+        $breadcrumbItems = array(
+            array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
+            array('value' => 'Layouts'),
+        );
 
-		$zones = $this->mugoPageService->getZones();
+        $zones = $this->mugoPageService->getZones();
 
-		$contentTypesInGroups = $this->mugoPageService->getContentTypes();
+        $contentTypesInGroups = $this->mugoPageService->getContentTypes();
 
-		$layouts = $this->mugoPageService->getLayouts();
+        $layouts = $this->mugoPageService->getLayouts();
 
-		$params = array(
-			'blockTitle' => 'MugoPage Config Layouts',
-			'breadcrumbItems' => $breadcrumbItems,
-			'zones' => $zones,
-			'contentTypesInGroups' => $contentTypesInGroups,
-			'layouts' => $layouts
-		);
+        $params = array(
+            'blockTitle' => 'MugoPage Config Layouts',
+            'breadcrumbItems' => $breadcrumbItems,
+            'zones' => $zones,
+            'contentTypesInGroups' => $contentTypesInGroups,
+            'layouts' => $layouts
+        );
 
-		return $this->render($template, $params );
+        return $this->render($template, $params );
 
-	}
+    }
 
-	/**
-	 * Prepare content and render the zone config page
-	 */
-	public function renderZonesAction( String $template ): Response
-	{
+    /**
+     * Prepare content and render the zone config page
+     */
+    public function renderZonesAction( String $template ): Response
+    {
 
-		// checks permission
-		parent::performAccessCheck();
-		$this->denyAccessUnlessGranted(
-			new Attribute('mugopage_config_zones', 'read')
-		);
+        // checks permission
+        parent::performAccessCheck();
+        $this->denyAccessUnlessGranted(
+            new Attribute('mugopage_config_zones', 'read')
+        );
 
-		$breadcrumbItems = array(
-			array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
-			array('value' => 'Zones'),
-		);
+        $breadcrumbItems = array(
+            array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
+            array('value' => 'Zones'),
+        );
 
-		$zones = $this->mugoPageService->getZones();
+        $zones = $this->mugoPageService->getZones();
 
-		$params = array(
-			'blockTitle' => 'MugoPage Config Zones',
-			'breadcrumbItems' => $breadcrumbItems,
-			'zones' => $zones
-		);
+        $params = array(
+            'blockTitle' => 'MugoPage Config Zones',
+            'breadcrumbItems' => $breadcrumbItems,
+            'zones' => $zones
+        );
 
-		return $this->render($template, $params );
+        return $this->render($template, $params );
 
-	}
+    }
 
-	/**
-	 * Prepare content and render the block config page
-	 */
-	public function renderBlocksAction( String $template ): Response
-	{
+    /**
+     * Prepare content and render the block config page
+     */
+    public function renderBlocksAction( String $template ): Response
+    {
 
-		// checks permission
-		parent::performAccessCheck();
-		$this->denyAccessUnlessGranted(
-			new Attribute('mugopage_config_blocks', 'read')
-		);
+        // checks permission
+        parent::performAccessCheck();
+        $this->denyAccessUnlessGranted(
+            new Attribute('mugopage_config_blocks', 'read')
+        );
 
-		$breadcrumbItems = array(
-			array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
-			array('value' => 'Blocks'),
-		);
+        $breadcrumbItems = array(
+            array('value' => 'MugoPage Config Dashboard', 'url' => $this->generateUrl('mugopage_config.dashboard')),
+            array('value' => 'Blocks'),
+        );
 
-		$zones = $this->mugoPageService->getZones();
+        $zones = $this->mugoPageService->getZones();
 
-		$contentTypesInGroups = $this->mugoPageService->getContentTypes();
+        $contentTypesInGroups = $this->mugoPageService->getContentTypes();
 
-		$customAttributeTypes = $this->mugoPageService->getCustomAttributeTypes();
+        $customAttributeTypes = $this->mugoPageService->getCustomAttributeTypes();
 
-		$blocks = $this->mugoPageService->getBlocks();
+        $blocks = $this->mugoPageService->getBlocks();
 
-		$params = array(
-			'blockTitle' => 'MugoPage Config Blocks',
-			'breadcrumbItems' => $breadcrumbItems,
-			'zones' => $zones,
-			'contentTypesInGroups' => $contentTypesInGroups,
-			'blocks' => $blocks,
-			'customAttributeTypes' => $customAttributeTypes,
-		);
+        $params = array(
+            'blockTitle' => 'MugoPage Config Blocks',
+            'breadcrumbItems' => $breadcrumbItems,
+            'zones' => $zones,
+            'contentTypesInGroups' => $contentTypesInGroups,
+            'blocks' => $blocks,
+            'customAttributeTypes' => $customAttributeTypes,
+        );
 
-		return $this->render($template, $params );
+        return $this->render($template, $params );
 
-	}
+    }
 
-	/**
-	 * Entry point for saving layout action
-	 * @return JsonResponse
-	 * @throws Exceptions\InvalidArgumentException
-	 */
-	public function saveLayoutAction(): JsonResponse
-	{
-		$canEdit = $this->permissionResolver->hasAccess('mugopage_config_layouts', 'edit');
-		if($canEdit){
+    /**
+     * Entry point for saving layout action
+     * @return JsonResponse
+     * @throws Exceptions\InvalidArgumentException
+     */
+    public function saveLayoutAction(): JsonResponse
+    {
+        $canEdit = $this->permissionResolver->hasAccess('mugopage_config_layouts', 'edit');
+        if($canEdit){
 
-			$request = Request::createFromGlobals();
-			if( $request->request->get('identifier', false) !== false ) {
-				$jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_LAYOUT, $request);
-			} else {
-				$jsonResponse = array(
-					'type' => 'warning',
-					'message' => 'Identifier field is empty',
-				);
+            $request = Request::createFromGlobals();
+            if( $request->request->get('identifier', false) !== false ) {
+                $jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_LAYOUT, $request);
+            } else {
+                $jsonResponse = array(
+                    'type' => 'warning',
+                    'message' => 'Identifier field is empty',
+                );
 
-			}
+            }
 
-		} else {
-			$jsonResponse = array(
-				'type' => 'warning',
-				'message' => 'You do not have permissions to create or edit layouts!',
-			);
-		}
+        } else {
+            $jsonResponse = array(
+                'type' => 'warning',
+                'message' => 'You do not have permissions to create or edit layouts!',
+            );
+        }
 
-		$response = new JsonResponse();
-		$response->setData( $jsonResponse );
-		return $response;
-	}
+        $response = new JsonResponse();
+        $response->setData( $jsonResponse );
+        return $response;
+    }
 
-	/**
-	 * Entry point for saving zone action
-	 * @return JsonResponse
-	 * @throws Exceptions\InvalidArgumentException
-	 */
-	public function saveZoneAction(): JsonResponse
-	{
+    /**
+     * Entry point for saving zone action
+     * @return JsonResponse
+     * @throws Exceptions\InvalidArgumentException
+     */
+    public function saveZoneAction(): JsonResponse
+    {
 
-		$canEdit = $this->permissionResolver->hasAccess('mugopage_config_zones', 'edit');
-		if($canEdit){
+        $canEdit = $this->permissionResolver->hasAccess('mugopage_config_zones', 'edit');
+        if($canEdit){
 
-			$request = Request::createFromGlobals();
-			if( $request->request->get('identifier', false) !== false ) {
-				$jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_ZONE, $request);
-			} else {
-				$jsonResponse = array(
-					'type' => 'warning',
-					'message' => 'Identifier field is empty',
-				);
+            $request = Request::createFromGlobals();
+            if( $request->request->get('identifier', false) !== false ) {
+                $jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_ZONE, $request);
+            } else {
+                $jsonResponse = array(
+                    'type' => 'warning',
+                    'message' => 'Identifier field is empty',
+                );
 
-			}
+            }
 
-		} else {
-			$jsonResponse = array(
-				'type' => 'warning',
-				'message' => 'You do not have permissions to create or edit zones!',
-			);
-		}
+        } else {
+            $jsonResponse = array(
+                'type' => 'warning',
+                'message' => 'You do not have permissions to create or edit zones!',
+            );
+        }
 
-		$response = new JsonResponse();
-		$response->setData( $jsonResponse );
-		return $response;
+        $response = new JsonResponse();
+        $response->setData( $jsonResponse );
+        return $response;
 
-	}
+    }
 
-	/**
-	 * Entry point for saving block action
-	 * @return JsonResponse
-	 * @throws Exceptions\InvalidArgumentException
-	 */
-	public function saveBlockAction(): JsonResponse
-	{
-		$canEdit = $this->permissionResolver->hasAccess('mugopage_config_blocks', 'edit');
-		if($canEdit){
+    /**
+     * Entry point for saving block action
+     * @return JsonResponse
+     * @throws Exceptions\InvalidArgumentException
+     */
+    public function saveBlockAction(): JsonResponse
+    {
+        $canEdit = $this->permissionResolver->hasAccess('mugopage_config_blocks', 'edit');
+        if($canEdit){
 
-			$request = Request::createFromGlobals();
-			if( $request->request->get('identifier', false) !== false ) {
-				$jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_BLOCK, $request);
-			} else {
-				$jsonResponse = array(
-					'type' => 'warning',
-					'message' => 'Identifier field is empty',
-				);
+            $request = Request::createFromGlobals();
+            if( $request->request->get('identifier', false) !== false ) {
+                $jsonResponse = $this->mugoPageService->saveMugoPageConfiguration($this->mugoPageService::ITEM_TYPE_BLOCK, $request);
+            } else {
+                $jsonResponse = array(
+                    'type' => 'warning',
+                    'message' => 'Identifier field is empty',
+                );
 
-			}
+            }
 
-		} else {
-			$jsonResponse = array(
-				'type' => 'warning',
-				'message' => 'You do not have permissions to create or edit blocks!',
-			);
-		}
+        } else {
+            $jsonResponse = array(
+                'type' => 'warning',
+                'message' => 'You do not have permissions to create or edit blocks!',
+            );
+        }
 
-		$response = new JsonResponse();
-		$response->setData( $jsonResponse );
-		return $response;
-	}
+        $response = new JsonResponse();
+        $response->setData( $jsonResponse );
+        return $response;
+    }
 
-	/**
-	 * Entry point to delete items
-	 * it requires $type and $identifier
-	 * @return JsonResponse
-	 */
-	public function deleteAction(): JsonResponse
-	{
-		$request = Request::createFromGlobals();
+    /**
+     * Entry point to delete items
+     * it requires $type and $identifier
+     * @return JsonResponse
+     */
+    public function deleteAction(): JsonResponse
+    {
+        $request = Request::createFromGlobals();
 
-		$type = $request->request->get('itemtype', false);
-		$identifier = $request->request->get('identifier', false);
+        $type = $request->request->get('itemtype', false);
+        $identifier = $request->request->get('identifier', false);
 
-		$jsonResponse =  array();
+        $jsonResponse =  array();
 
-		if ($type === false || $identifier === false){
-			$jsonResponse =  array(
-				'type' => 'warning',
-				'message' => 'Your request does not have all the required parameters',
-			);
-		} else {
+        if ($type === false || $identifier === false){
+            $jsonResponse =  array(
+                'type' => 'warning',
+                'message' => 'Your request does not have all the required parameters',
+            );
+        } else {
 
-			$policyName = false;
-			switch ($type) {
-				case $this->mugoPageService::ITEM_TYPE_ZONE:
-					$policyName = 'mugopage_config_zones';
-					break;
-				case $this->mugoPageService::ITEM_TYPE_LAYOUT:
-					$policyName = 'mugopage_config_layouts';
-					break;
-				case $this->mugoPageService::ITEM_TYPE_BLOCK:
-					$policyName = 'mugopage_config_blocks';
-					break;
-				default :
-					$jsonResponse =  array(
-						'type' => 'warning',
-						'message' => 'Request type not found!',
-					);
-			}
+            $policyName = false;
+            switch ($type) {
+                case $this->mugoPageService::ITEM_TYPE_ZONE:
+                    $policyName = 'mugopage_config_zones';
+                    break;
+                case $this->mugoPageService::ITEM_TYPE_LAYOUT:
+                    $policyName = 'mugopage_config_layouts';
+                    break;
+                case $this->mugoPageService::ITEM_TYPE_BLOCK:
+                    $policyName = 'mugopage_config_blocks';
+                    break;
+                default :
+                    $jsonResponse =  array(
+                        'type' => 'warning',
+                        'message' => 'Request type not found!',
+                    );
+            }
 
-			if ($policyName){
+            if ($policyName){
 
-				// check permission
-				$canDelete = $this->permissionResolver->hasAccess($policyName, 'delete');
+                // check permission
+                $canDelete = $this->permissionResolver->hasAccess($policyName, 'delete');
 
-				if($canDelete){
+                if($canDelete){
 
-					$jsonResponse = $this->mugoPageService->deleteMugoPageItem($type, $identifier);
+                    $jsonResponse = $this->mugoPageService->deleteMugoPageItem($type, $identifier);
 
-				} else {
-					$jsonResponse = array(
-						'type' => 'warning',
-						'message' => 'You do not have permissions to delete items!',
-					);
-				}
+                } else {
+                    $jsonResponse = array(
+                        'type' => 'warning',
+                        'message' => 'You do not have permissions to delete items!',
+                    );
+                }
 
-			}
+            }
 
-		}
+        }
 
-		$response = new JsonResponse();
-		$response->setData( $jsonResponse );
-		return $response;
+        $response = new JsonResponse();
+        $response->setData( $jsonResponse );
+        return $response;
 
-	}
+    }
 
     public function getRelatedItemsDataAction()
     {

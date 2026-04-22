@@ -1,16 +1,16 @@
 parameters:
-    mugopage.controller.class: Mugo\PageBundle\Controller\ConfigController
-    mugopage.pageService.class: Mugo\PageBundle\Services\PageService
+    mugopage.controller.class: MugoWeb\PageBundle\Controller\ConfigController
+    mugopage.pageService.class: MugoWeb\PageBundle\Services\PageService
     mugopage_settings:
         exclude_content_groups:
             2: Users
-            3: Media
             4: Setup
         default_templates:
             layout: 'ibexadesign/field_types/mugopage_default_layout.html.twig'
             zone: 'ibexadesign/field_types/mugopage_default_zone.html.twig'
             block: 'ibexadesign/field_types/mugopage_default_block.html.twig'
         custom_attribute_types_available:
+            checkbox: 'Checkbox'
             choice: 'Choice'
             contentrelation: 'Content Relation'
             integer: 'Integer'
@@ -22,30 +22,30 @@ services:
         public: true
         autowire: true
         autoconfigure: true
-    Mugo\PageBundle\Form\Type\FieldType\MugoPageFieldType:
+    MugoWeb\PageBundle\Form\Type\FieldType\MugoPageFieldType:
         public: true
         arguments:
             - '@ibexa.api.service.field_type'
         tags:
             - { name: 'form.type' }
-    Mugo\PageBundle\FieldType\MugoPage\Type:
+    MugoWeb\PageBundle\FieldType\MugoPage\Type:
         public: true
         tags:
             - { name: ibexa.field_type, alias: mugopage }
-    Mugo\PageBundle\Mapper\MugoPageFormDefinitionMapper:
+    MugoWeb\PageBundle\Mapper\MugoPageFormDefinitionMapper:
         tags:
             - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: mugopage }
-    Mugo\PageBundle\Mapper\MugoPageFormValueMapper:
+    MugoWeb\PageBundle\Mapper\MugoPageFormValueMapper:
         tags:
             - { name: ibexa.admin_ui.field_type.form.mapper.value, fieldType: mugopage }
-    Mugo\PageBundle\Persistence\Legacy\Content\FieldValue\Converter\MugoPageConverter:
+    MugoWeb\PageBundle\Persistence\Legacy\Content\FieldValue\Converter\MugoPageConverter:
         tags:
             - {name: ibexa.field_type.storage.legacy.converter, alias: mugopage}
     ibexa.field_type.indexable.mugopage:
         class: Ibexa\Core\FieldType\TextBlock\SearchField
         tags:
             - { name: ibexa.field_type.indexable, alias: mugopage }
-    Mugo\PageBundle\EventListener\MenuListener:
+    MugoWeb\PageBundle\EventListener\MenuListener:
         arguments:
             - "@security.authorization_checker"
         tags:
@@ -53,14 +53,14 @@ services:
 
     mugopage.config.controller:
         public: true
-        class: Mugo\PageBundle\Controller\ConfigController
+        class: MugoWeb\PageBundle\Controller\ConfigController
         parent: Ibexa\Core\MVC\Symfony\Controller\Controller
         arguments:
             $repository: '@ibexa.api.repository'
             $mugoPageService: '@mugopage.service'
             $contentService: '@ibexa.api.service.content'
             $permissionResolver: '@Ibexa\Core\Repository\Permission\PermissionResolver'
-    Mugo\PageBundle\Controller\ConfigController: '@mugopage.config.controller'
+    MugoWeb\PageBundle\Controller\ConfigController: '@mugopage.config.controller'
 
     mugopage.components.content_edit_form_after:
         parent: Ibexa\AdminUi\Component\TwigComponent
@@ -79,19 +79,21 @@ services:
             - { name: ibexa.admin_ui.component, group: 'stylesheet-head' }
 
     mugopage.service:
-        class: 'Mugo\PageBundle\Services\MugoPageService'
+        class: 'MugoWeb\PageBundle\Services\MugoPageService'
         public: true
         arguments:
             $entityManager: '@doctrine.orm.ibexa_default_entity_manager'
             $contentTypeService: '@ibexa.api.service.content_type'
             $container: '@service_container'
             $contentService: '@ibexa.api.service.content'
+            $twigThemeLoader: '@Ibexa\DesignEngine\Templating\Twig\TwigThemeLoader'
+            $locationService: '@ibexa.api.service.location'
         tags:
             - { name: monolog.logger, channel: mugopage_service }
-    Mugo\PageBundle\Service\MugoPageService: '@mugopage.service'
+    MugoWeb\PageBundle\Service\MugoPageService: '@mugopage.service'
 
     mugopage.twig.page_extension:
-        class: Mugo\PageBundle\Twig\Extension
+        class: MugoWeb\PageBundle\Twig\Extension
         arguments:
             $container: '@service_container'
             $repository: '@ibexa.api.repository'
@@ -101,6 +103,33 @@ services:
         public: true
         tags:
             - { name: twig.extension }
+    mugopage.ezflow.settings:
+        class: MugoWeb\PageBundle\Command\UpdateLegacySettingsCommand
+        arguments:
+            - '@service_container'
+            - '@ibexa.api.repository'
+        tags:
+            - { name: console.command }
+    mugopage.ezflow.data:
+        class: MugoWeb\PageBundle\Command\UpdateLegacyDataCommand
+        arguments:
+            - '@service_container'
+            - '@ibexa.api.repository'
+            - '@mugopage.service'
+        tags:
+            - { name: console.command }
+    mugopage.ezflow.remove-legacy-fields:
+        class: MugoWeb\PageBundle\Command\RemoveLegacyFieldsCommand
+        arguments:
+            - '@ibexa.api.repository'
+        tags:
+            - { name: console.command }
+    mugopage.ezflow.patch-items:
+        class: MugoWeb\PageBundle\Command\PatchItemsCommand
+        arguments:
+            $entityManager: '@doctrine.orm.ibexa_default_entity_manager'
+        tags:
+            - { name: console.command }
 #    mugopage_platform.components.script_body:
 #        parent: Ibexa\AdminUi\Component\ScriptComponent
 #        autowire: true

@@ -29,7 +29,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
      */
     const layoutSection = mugoPageField.querySelector('.mugopage-layout-section');
     const layoutBtnContainer = layoutSection.querySelector('.accordion-layout .accordion-body .layout-options-section');
-    const ibexaTextAreaField = mugoPageField.querySelector('.mugopage-ibexa-field > textarea');
+    const ibexaTextAreaField = mugoPageField.querySelector('.mugopage-ibexa-field .ibexa-input--textarea');
 
     const zoneSection = mugoPageField.querySelector('.mugopage-zone-section');
 
@@ -74,99 +74,104 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                 let content = {}
                 content.name = block.querySelector('.accordion-body .content-fields input[name="name"]').value;
                 content.id = block.querySelector('.accordion-body .content-fields div.block-id').innerHTML;
-				blockObj.content = content;
+                blockObj.content = content;
 
                 // get custom attributes
                 let customAttributeArray = [];
                 let customAttributeFieldSets = block.querySelectorAll('.custom-attributes [data-type]');
                 Array.prototype.forEach.call(customAttributeFieldSets, function(customAttributeFieldSet) {
 
-					let caIdentifier = '';
-					let caType = '';
-					let caValue = '';
+                    let caIdentifier = '';
+                    let caType = '';
+                    let caValue = '';
 
-					switch (customAttributeFieldSet.getAttribute('data-type')){
+                    switch (customAttributeFieldSet.getAttribute('data-type')){
 
-						case 'string':
-						case 'integer':
-                                                case 'text':
-							caIdentifier = customAttributeFieldSet.getAttribute('name');
-							caType = customAttributeFieldSet.getAttribute('data-type');
-							caValue = customAttributeFieldSet.value;
-							break;
-                                                case 'choice':
-							caIdentifier = customAttributeFieldSet.getAttribute('data-name');
-							caType = customAttributeFieldSet.getAttribute('data-type');
-                                                        switch(customAttributeFieldSet.getAttribute('data-choicetype'))
-                                                        {
-                                                            case 'radio':
-                                                                let selectedRadio = customAttributeFieldSet.querySelector('input[type=radio]:checked');
-                                                                if(selectedRadio)
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', selectedRadio.value);
-                                                                }
-                                                                else
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', 'none');
-                                                                }
-                                                                break;
-                                                            case 'select':
-                                                                let selectedOption = customAttributeFieldSet.querySelector('select option:checked');
-                                                                if(selectedOption)
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', selectedOption.value);
-                                                                }
-                                                                else
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', 'none');
-                                                                }
-                                                                break;
-                                                            case 'select_multiple':
-                                                                let selectedOptions = customAttributeFieldSet.querySelectorAll('select option:checked');
-                                                                if(selectedOptions.length)
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', [...selectedOptions].map(item => item.value).join(','));
-                                                                }
-                                                                else
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', 'none');
-                                                                }
-                                                                break;
-                                                            case 'checkbox':
-                                                                let checkedOptions = customAttributeFieldSet.querySelectorAll('input[type=checkbox]:checked');
-                                                                if(checkedOptions.length)
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', [...checkedOptions].map(item => item.value).join(','));
-                                                                }
-                                                                else
-                                                                {
-                                                                    customAttributeFieldSet.setAttribute('data-value', 'none');
-                                                                }
-                                                                break;
-                                                        }
-							caValue = customAttributeFieldSet.getAttribute('data-value');
-							break;
+                        case 'string':
+                        case 'integer':
+                        case 'text':
+                            caIdentifier = customAttributeFieldSet.getAttribute('name');
+                            caType = customAttributeFieldSet.getAttribute('data-type');
+                            caValue = customAttributeFieldSet.value;
+                            break;
+                        case 'checkbox':
+                                caIdentifier = customAttributeFieldSet.getAttribute('name');
+                                caType = customAttributeFieldSet.getAttribute('data-type');
+                                caValue = customAttributeFieldSet.checked ? "1" : "0";
+                                break;
+                        case 'choice':
+                            caIdentifier = customAttributeFieldSet.getAttribute('data-name');
+                            caType = customAttributeFieldSet.getAttribute('data-type');
+                            switch(customAttributeFieldSet.getAttribute('data-choicetype'))
+                            {
+                                case 'radio':
+                                    let selectedRadio = customAttributeFieldSet.querySelector('input[type=radio]:checked');
+                                    if(selectedRadio)
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', selectedRadio.value);
+                                    }
+                                    else
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', 'none');
+                                    }
+                                    break;
+                                case 'select':
+                                    let selectedOption = customAttributeFieldSet.querySelector('select option:checked');
+                                    if(selectedOption)
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', selectedOption.value);
+                                    }
+                                    else
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', 'none');
+                                    }
+                                    break;
+                                case 'select_multiple':
+                                    let selectedOptions = customAttributeFieldSet.querySelectorAll('select option:checked');
+                                    if(selectedOptions.length)
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', [...selectedOptions].map(item => item.value).join(','));
+                                    }
+                                    else
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', 'none');
+                                    }
+                                    break;
+                                case 'checkbox':
+                                    let checkedOptions = customAttributeFieldSet.querySelectorAll('input[type=checkbox]:checked');
+                                    if(checkedOptions.length)
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', [...checkedOptions].map(item => item.value).join(','));
+                                    }
+                                    else
+                                    {
+                                        customAttributeFieldSet.setAttribute('data-value', 'none');
+                                    }
+                                    break;
+                            }
+                            caValue = customAttributeFieldSet.getAttribute('data-value');
+                            break;
 
-						case 'contentrelation':
-							caIdentifier = customAttributeFieldSet.getAttribute('data-identifier');
-							caType = customAttributeFieldSet.getAttribute('data-type');
-							caValue = [];
+                        case 'contentrelation':
+                            caIdentifier = customAttributeFieldSet.getAttribute('data-identifier');
+                            caType = customAttributeFieldSet.getAttribute('data-type');
+                            caValue = [];
 
-							let relatedContentItems = customAttributeFieldSet.querySelectorAll('div.content-related-item');
-							Array.prototype.forEach.call(relatedContentItems, function(relatedContentItem) {
-								caValue.push(relatedContentItem.getAttribute('data-relatedcontentid'));
-							})
-							break;
+                            let relatedContentItems = customAttributeFieldSet.querySelectorAll('div.content-related-item');
+                            Array.prototype.forEach.call(relatedContentItems, function(relatedContentItem) {
+                                caValue.push({'contentId': relatedContentItem.getAttribute('data-relatedcontentid'), 'locationId': relatedContentItem.getAttribute('data-relatedlocationid')});
+                            })
+                            break;
 
-					}
+                    }
 
-					if (caValue) {
-						let caObj = {};
-						caObj.identifier = caIdentifier;
-						caObj.type = caType;
-						caObj.value = caValue;
-						customAttributeArray.push(caObj);
-					}
+                    if (caValue) {
+                        let caObj = {};
+                        caObj.identifier = caIdentifier;
+                        caObj.type = caType;
+                        caObj.value = caValue;
+                        customAttributeArray.push(caObj);
+                    }
 
                 })
 
@@ -299,10 +304,17 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
         })
 
         // show only zones available for the layout
+        let hasShownZone = false;
+        let shownZoneId = '';
         Array.prototype.forEach.call(zonesArray, function(zoneIdentifier) {
             let availableZoneButton = zoneSection.querySelector('.mugopage-tabs button.mugopage-tabitem[data-identifier="'+zoneIdentifier+'"]');
             if (availableZoneButton){
                 availableZoneButton.classList.remove('d-none');
+                if(!hasShownZone) {
+                    availableZoneButton.setAttribute('aria-expanded', "true");
+                    shownZoneId = availableZoneButton.getAttribute('aria-controls');
+                    hasShownZone = true;
+                }
             } else {
                 if (showNotifications) {
                     ibexa.helpers.notification.showWarningNotification('The zone identifier ' + zoneIdentifier + ' was not found in the block of configuration! Refresh the page to load the correct MugoPage configuration.');
@@ -313,7 +325,13 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
         // handles the collapse visibility manually because Collapse does not work correctly with hidden elements
         const zoneBlocks = zoneSection.querySelectorAll('.mugopage-tabs-container .accordion-collapse');
         Array.prototype.forEach.call(zoneBlocks, function(zoneBlock) {
-            zoneBlock.classList.remove('show');
+            if(zoneBlock.id == shownZoneId) {
+                zoneBlock.classList.add('show');
+            }
+            else
+            {
+                zoneBlock.classList.remove('show');
+            }
         })
 
         // remove any existing block from the zones
@@ -398,6 +416,11 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
 
         // create a new clone related block item
         let newContentRelationItem = relatedItemRepo.cloneNode(true);
+        const contentDiv = newContentRelationItem.querySelector('.content');
+        if (!itemLocationId) {
+            contentDiv.classList.add('text-warning');
+            itemName = '[DELETED] ' + itemName;
+        }
 
         // add content to the new related content
         newContentRelationItem.querySelector('.content .content-name').innerHTML = itemName;
@@ -406,6 +429,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
         newContentRelationItem.querySelector('.content .content-location-id').innerHTML = itemLocationId;
 
         newContentRelationItem.setAttribute('data-relatedcontentid', itemContentId);
+        newContentRelationItem.setAttribute('data-relatedlocationid', itemLocationId);
 
         // add events
         newContentRelationItem.querySelector('.btn-accordion.remove').addEventListener('click', removeRelatedContent);
@@ -456,17 +480,17 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
 
         event.preventDefault();
 
-		let btnTrigger = event.currentTarget;
+        let btnTrigger = event.currentTarget;
 
         const config = JSON.parse(btnTrigger.getAttribute('data-udw-config'));
 
         // override config with data from btnTrigger
         config.multiple = true;
         config.title = btnTrigger.getAttribute('data-udw-title');
-		config.multiple_items_limit = btnTrigger.getAttribute('data-udw-maximumitems');
-		if (btnTrigger.getAttribute('data-udw-allowedtypes')) {
-			config.allowedContentTypes = btnTrigger.getAttribute('data-udw-allowedtypes');
-		}
+        config.multiple_items_limit = btnTrigger.getAttribute('data-udw-maximumitems');
+        if (btnTrigger.getAttribute('data-udw-allowedtypes')) {
+            config.allowedContentTypes = btnTrigger.getAttribute('data-udw-allowedtypes');
+        }
 
         udwRoot = ReactDOM.createRoot(udwContainer);
         udwRoot.render(
@@ -489,7 +513,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
         let blockIdentifier = blockItem.querySelector('.accordion-body .mugopage-input.block-id').innerHTML;
 
         blockItem.querySelector('.accordion-header div.block-name').innerHTML = blockName;
-        blockItem.querySelector('.accordion-header div.block-identifier').innerHTML = blockIdentifier;
+        blockItem.querySelector('.accordion-header div.block-identifier').innerHTML = blockItem.dataset.name;
 
     }
 
@@ -576,6 +600,19 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                                         inputCustomField.value = customAttribute.value;
                                     }
                                     break;
+                                case 'checkbox':
+                                    let checkboxField = newBlock.querySelector(
+                                        `.accordion-body .custom-attributes input[name="${customAttribute.identifier}"][data-type="checkbox"]`
+                                    );
+                                    if (checkboxField) {
+                                        // Convert to boolean: true if "1", 1, "true", true …
+                                        checkboxField.checked =
+                                            customAttribute.value === "1" ||
+                                            customAttribute.value === 1   ||
+                                            customAttribute.value === "true" ||
+                                            customAttribute.value === true;
+                                    }
+                                    break;
                                 case 'text':
                                     let textareaCustomField = newBlock.querySelector('.accordion-body .custom-attributes textarea[name="'+customAttribute.identifier+'"][data-type="' + customAttribute.type + '"]');
                                     if (textareaCustomField){
@@ -629,23 +666,21 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                                     break;
                                 case 'contentrelation':
                                     let relatedContentSection = newBlock.querySelector('.related-items-list[data-identifier="'+customAttribute.identifier+'"][data-type="' + customAttribute.type + '"]').closest('.related-content-section');
+                                    for(let relatedContentData of customAttribute.value) {
+                                        let relatedContent = relatedContentData['contentId'];
+                                        let relatedItem = mugoPageField.querySelector('.related-content-to-load div[data-contentid="'+relatedContent+'"]');
+                                        if (relatedItem) {
 
-                                    Array.prototype.forEach.call(customAttribute.value, function(relatedContent) {
+                                                let relatedData = {};
+                                                relatedData.name = relatedItem.getAttribute('data-name');
+                                                relatedData.identifier = relatedItem.getAttribute('data-identifier');
+                                                relatedData.contentid = relatedItem.getAttribute('data-contentid');
+                                                relatedData.locationid = relatedItem.getAttribute('data-locationid');
 
-                                            let relatedItem = mugoPageField.querySelector('.related-content-to-load div[data-contentid="'+relatedContent+'"]');
-                                            if (relatedItem) {
+                                                addRelatedContent(relatedContentSection, relatedData);
 
-                                                    let relatedData = {};
-                                                    relatedData.name = relatedItem.getAttribute('data-name');
-                                                    relatedData.identifier = relatedItem.getAttribute('data-identifier');
-                                                    relatedData.contentid = relatedItem.getAttribute('data-contentid');
-                                                    relatedData.locationid = relatedItem.getAttribute('data-locationid');
-
-                                                    addRelatedContent(relatedContentSection, relatedData);
-
-                                            }
-
-                                    })
+                                        }
+                                    };
                                     break;
                                 default:
                                     ibexa.helpers.notification.showWarningNotification('Loader ' + customAttribute.type + ' was not found on the page!');
@@ -659,7 +694,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
 
                 // set the block id
                 newBlock.querySelector('.accordion-body .content-fields div.block-id').innerHTML = blockId;
-                newBlock.querySelector('.accordion-header .block-identifier').innerHTML = blockId;
+                newBlock.querySelector('.accordion-header .block-identifier').innerHTML = newBlock.dataset.name;
 
                 // prepare unique attribute/block id
                 const accordionId = 'accordion-randomid-'+blockId;
@@ -695,21 +730,21 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                 let btnsAddRelatedContentToBlock = newBlock.querySelectorAll('button.btn-add-related-content-to-block');
                 if (btnsAddRelatedContentToBlock){
 
-					Array.prototype.forEach.call(btnsAddRelatedContentToBlock, function(btnAddRelatedContentToBlock) {
+                    Array.prototype.forEach.call(btnsAddRelatedContentToBlock, function(btnAddRelatedContentToBlock) {
 
-						btnAddRelatedContentToBlock.addEventListener('click', renderUDW);
+                        btnAddRelatedContentToBlock.addEventListener('click', renderUDW);
 
-						let contentRelationList = btnAddRelatedContentToBlock.closest('.related-content-section').querySelector('.related-content-section .related-items-list');
-						new Sortable(contentRelationList, {
-							animation: 500,
-							ghostClass: 'accordion-item-ghost',
-							handle: '.button-handler-relation', // handle's class
-							onEnd: function (evt, originalEvent) {
-								storeBlockConfiguration()
-							},
-						});
+                        let contentRelationList = btnAddRelatedContentToBlock.closest('.related-content-section').querySelector('.related-content-section .related-items-list');
+                        new Sortable(contentRelationList, {
+                            animation: 500,
+                            ghostClass: 'accordion-item-ghost',
+                            handle: '.button-handler-relation', // handle's class
+                            onEnd: function (evt, originalEvent) {
+                                storeBlockConfiguration()
+                            },
+                        });
 
-					});
+                    });
 
                 }
 

@@ -7,7 +7,7 @@
         <div class="content-related-item">
             <button class="btn-accordion button-handler-relation" type="button">
                 <svg class="icon">
-                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#drag"></use>
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#drag"></use>
                 </svg>
             </button>
             <div class="content">
@@ -31,7 +31,7 @@
             </div>
             <button class="btn-accordion remove" type="button">
                 <svg class="icon">
-                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#discard"></use>
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#discard"></use>
                 </svg>
             </button>
         </div>
@@ -39,6 +39,6 @@
     <button class="btn btn-primary btn-add-related-content-to-block open-udw"
         data-udw-title="{{ fieldData.name }}"
         data-udw-allowedtypes="{% if fieldData.allowedtypes is defined and fieldData.allowedtypes %}{{ get_allowed_content_identifiers(fieldData.allowedtypes)|json_encode() }}{% endif %}"
-        data-udw-maximumitems="{{ fieldData.maximumitems }}"
+        data-udw-maximumitems="{{ fieldData.maximumitems is defined ? fieldData.maximumitems : '0' }}"
         data-udw-config="{{ ibexa_udw_config( 'multiple') }}">Add Related Items</button>
 </div>

@@ -8,11 +8,11 @@
                 <div class="accordion-header">
                     <div class="block-header-label">
                         <div class="block-name">{{ block.name }}</div>
-                        <div class="block-identifier">{{ block.id }}</div>
+                        <div class="block-identifier">{{ block.config.name }}</div>
                     </div>
                     <button class="btn-accordion accordion-action collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ block.id }}-block-{{ loop.index  }}" aria-expanded="false" aria-controls="{{ block.id }}-block-{{ loop.index }}">
                         <svg class="icon">
-                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                            <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#caret-up"></use>
                         </svg>
                     </button>
                 </div>

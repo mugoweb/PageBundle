@@ -198,6 +198,7 @@ const cleanZoneForm = () => {
     form.querySelector('input[name="name"]').value = '';
     form.querySelector('input[name="identifier"]').value = '';
     form.querySelector('input[name="actiontype"]').value = ITEM_ACTION_NEW;
+    form.querySelector('input[name="template"]').value = '';
 
     form.querySelector('input[name="identifier"]').setAttribute('type', 'text');
 
@@ -282,6 +283,7 @@ const loadZoneForm = (item) => {
 
     let name = item.getAttribute('data-name');
     let identifier = item.getAttribute('data-identifier');
+    let template = item.getAttribute('data-template');
 
     // update
     let form = document.getElementById('mugopage-form');
@@ -289,6 +291,7 @@ const loadZoneForm = (item) => {
     form.querySelector('input[name="identifier"]').value = identifier;
 
     form.querySelector('input[name="actiontype"]').value = ITEM_ACTION_EDIT;
+    form.querySelector('input[name="template"]').value = template;
 
     form.querySelector('input[name="identifier"]').setAttribute('type', 'hidden');
 
@@ -359,7 +362,7 @@ const loadBlockForm = (item) => {
     let description = item.getAttribute('data-description');
     let template = item.getAttribute('data-template');
     let zones = item.getAttribute('data-zones').split('|#|');
-    let attr = JSON.parse(item.getAttribute('data-attr'));
+    let attr = item.getAttribute('data-attr') ? JSON.parse(item.getAttribute('data-attr')) : false;
 
     // update
     let form = document.getElementById('mugopage-form');
@@ -498,6 +501,7 @@ const createOrUpdateItemInList = (data) => {
             refinedData['name'] = form.querySelector('input[name="name"]').value;
             refinedData['identifier'] = form.querySelector('input[name="identifier"]').value;
             refinedData['type'] = ITEM_TYPE_ZONE;
+            refinedData['template'] = form.querySelector('input[name="template"]').value;
             break;
         case ITEM_TYPE_LAYOUT:
             // refine layout data
@@ -521,7 +525,7 @@ const createOrUpdateItemInList = (data) => {
 
             refinedData['type'] = ITEM_TYPE_LAYOUT;
             break;
-		case ITEM_TYPE_BLOCK:
+        case ITEM_TYPE_BLOCK:
             // refine layout data
             refinedData['name'] = form.querySelector('input[name="name"]').value;
             refinedData['identifier'] = form.querySelector('input[name="identifier"]').value;

@@ -39,7 +39,7 @@
                     <div class="new">
                         <button type="button" data-action="new" data-type="zone">
                             <svg class="icon">
-                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#create"></use>
+                                <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#create"></use>
                             </svg>
                             Create Zone
                         </button>
@@ -47,11 +47,15 @@
                     <div class="items">
                         {% if zones is defined and zones %}
                             {% for zone in zones %}
-
-                                <button class="item" data-name="{{ zone.data.name }}" data-identifier="{{ zone.identifier }}" data-action="edit" data-type="zone">
+                                <button class="item"
+                                        data-name="{{ zone.data.name }}"
+                                        data-identifier="{{ zone.identifier }}"
+                                        data-template="{{ zone.data.template }}"
+                                        data-action="edit"
+                                        data-type="zone">
                                     <div class="item-main">
                                         <svg class="icon">
-                                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#landing_page"></use>
+                                            <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#landing_page"></use>
                                         </svg>
                                         <span>{{ zone.data.name }}</span>
                                     </div>
@@ -67,7 +71,7 @@
                         <button class="item" data-id="">
                             <div class="item-main">
                                 <svg class="icon">
-                                    <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#landing_page"></use>
+                                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#landing_page"></use>
                                 </svg>
                                 <span>Zone name</span>
                             </div>
@@ -91,14 +95,14 @@
                                 <div class="action-block action-block-sticky">
                                     <div class="action-title">
                                         <svg class="icon">
-                                            <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#file"></use>
+                                            <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#file"></use>
                                         </svg>
                                         <span>New</span>
                                     </div>
                                     <div class="action-buttons">
                                         <button id="btn-delete-item" type="button" class="btn btn-mugopage-link" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">
                                             <svg class="icon">
-                                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#trash"></use>
+                                                <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#trash"></use>
                                             </svg>
                                             <span>Delete</span>
                                         </button>
@@ -113,6 +117,9 @@
                                 <label class="mugopage-label">Identifier<span aria-hidden="true">*</span></label>
                                 <input class="mugopage-input" type="text" name="identifier" value="" required="required" />
                                 <div class="mugopage-input blocked d-none identifier"></div>
+
+                                <label class="mugopage-label">Template<span aria-hidden="true">*</span></label>
+                                <input class="mugopage-input" type="text" name="template" value="" required="required" />
 
                                 <input type="hidden" name="actiontype" value="new" />
                                 <input type="hidden" name="itemtype" value="zone" />

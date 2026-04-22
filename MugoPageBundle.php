@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle;
+namespace MugoWeb\PageBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

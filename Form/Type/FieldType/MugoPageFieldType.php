@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle\Form\Type\FieldType;
+namespace MugoWeb\PageBundle\Form\Type\FieldType;
 
 use Ibexa\ContentForms\FieldType\DataTransformer\FieldValueTransformer;
 use Ibexa\Contracts\Core\Repository\FieldTypeService;

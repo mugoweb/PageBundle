@@ -12,7 +12,7 @@
                     <div class="accordion-header">
                         <button class="btn-accordion button-handler" type="button">
                             <svg class="icon">
-                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#drag"></use>
+                                <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#drag"></use>
                             </svg>
                         </button>
                         <div class="block-header-label">
@@ -21,12 +21,12 @@
                         </div>
                         <button class="btn-accordion remove" type="button">
                             <svg class="icon">
-                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#trash"></use>
+                                <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#trash"></use>
                             </svg>
                         </button>
                         <button class="btn-accordion accordion-action collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ id }}-block-{{ loop.index  }}" aria-expanded="false" aria-controls="{{ id }}-block-{{ loop.index  }}">
                             <svg class="icon">
-                                <use xlink:href="/bundles/ibexaicons/img/all-icons.svg#caret-up"></use>
+                                <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#caret-up"></use>
                             </svg>
                         </button>
                     </div>
@@ -52,7 +52,7 @@
 
                             <div class="mugopage-form-group">
                                 <label class="mugopage-label full">Block Type Description</label>
-                                <div class="mugopage-input">{{ block.data.description|nl2br() }}</div>
+                                <div class="mugopage-input">{% if block.data.description is defined %}{{ block.data.description|nl2br() }}{% endif %}</div>
                             </div>
 
                             <div class="mugopage-section-divider">Block Data</div>

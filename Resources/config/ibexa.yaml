@@ -9,3 +9,8 @@ ibexa:
                 -   template: '@ibexadesign/mugopage/field_types/mugopage_field_view.html.twig'
                     # Priority is optional (default is 0). The higher it is, the higher your template gets in the list.
                     priority: 10
+
+        frontend_group:
+            field_templates:
+                -   template: '@ibexadesign/field_types/mugopage_field_view_frontend.html.twig'
+                    priority: 5

@@ -1,9 +1,9 @@
 <?php
 
-namespace Mugo\PageBundle\Mapper;
+namespace MugoWeb\PageBundle\Mapper;
 
 use Symfony\Component\Form\FormInterface;
-use Mugo\PageBundle\Form\Type\FieldType\MugoPageFieldType;
+use MugoWeb\PageBundle\Form\Type\FieldType\MugoPageFieldType;
 use Ibexa\Contracts\ContentForms\FieldType\FieldValueFormMapperInterface;
 use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle\Mapper;
+namespace MugoWeb\PageBundle\Mapper;
 
 use Ibexa\AdminUi\FieldType\FieldDefinitionFormMapperInterface;
 use Ibexa\AdminUi\Form\Data\FieldDefinitionData;

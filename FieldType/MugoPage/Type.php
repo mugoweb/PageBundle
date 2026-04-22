@@ -1,6 +1,6 @@
 <?php
 
-namespace Mugo\PageBundle\FieldType\MugoPage;
+namespace MugoWeb\PageBundle\FieldType\MugoPage;
 
 
 use Ibexa\Contracts\Core\FieldType\Value as SPIValue;
@@ -38,7 +38,7 @@ class Type extends FieldType
     }
 
     /**
-     * @param \Mugo\PageBundle\FieldType\MugoPage|\Ibexa\Contracts\Core\FieldType\Value $value
+     * @param \MugoWeb\PageBundle\FieldType\MugoPage|\Ibexa\Contracts\Core\FieldType\Value $value
      */
     public function getName(SPIValue $value, FieldDefinition $fieldDefinition, string $languageCode): string
     {
@@ -49,7 +49,7 @@ class Type extends FieldType
      * Returns the fallback default value of field type when no such default
      * value is provided in the field definition in content types.
      *
-     * @return \Mugo\PageBundle\FieldType\MugoPage
+     * @return \MugoWeb\PageBundle\FieldType\MugoPage
      */
     public function getEmptyValue()
     {
@@ -71,9 +71,9 @@ class Type extends FieldType
     /**
      * Inspects given $inputValue and potentially converts it into a dedicated value object.
      *
-     * @param string|\Mugo\PageBundle\FieldType\MugoPage $inputValue
+     * @param string|\MugoWeb\PageBundle\FieldType\MugoPage $inputValue
      *
-     * @return \Mugo\PageBundle\FieldType\MugoPage The potentially converted and structurally plausible value.
+     * @return \MugoWeb\PageBundle\FieldType\MugoPage The potentially converted and structurally plausible value.
      */
     protected function createValueFromInput($inputValue)
     {
@@ -89,7 +89,7 @@ class Type extends FieldType
      *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException If the value does not match the expected structure.
      *
-     * @param \Mugo\PageBundle\FieldType\MugoPage $value
+     * @param \MugoWeb\PageBundle\FieldType\MugoPage $value
      */
     protected function checkValueStructure(BaseValue $value)
     {
@@ -105,7 +105,7 @@ class Type extends FieldType
     /**
      * Returns information for FieldValue->$sortKey relevant to the field type.
      *
-     * @param \Mugo\PageBundle\FieldType\MugoPage $value
+     * @param \MugoWeb\PageBundle\FieldType\MugoPage $value
      *
      * @return string
      */
@@ -119,7 +119,7 @@ class Type extends FieldType
      *
      * @param mixed $hash
      *
-     * @return \Mugo\PageBundle\FieldType\MugoPage $value
+     * @return \MugoWeb\PageBundle\FieldType\MugoPage $value
      */
     public function fromHash($hash)
     {
@@ -133,7 +133,7 @@ class Type extends FieldType
     /**
      * Converts a $Value to a hash.
      *
-     * @param \Mugo\PageBundle\FieldType\MugoPage $value
+     * @param \MugoWeb\PageBundle\FieldType\MugoPage $value
      *
      * @return mixed
      */
@@ -219,15 +219,17 @@ class Type extends FieldType
                     foreach($zone['blocks'] as $block) {
 
                         if(isset($block['custom_attributes']) && $block['custom_attributes']){
-							foreach ($block['custom_attributes'] as $customAttribute) {
+                            foreach ($block['custom_attributes'] as $customAttribute) {
 
-								if ($customAttribute['type'] == 'contentrelation'){
-									foreach ($customAttribute['value'] as $relatedContendId){
-										$relatedContentIds[] = $relatedContendId;
-									}
-								}
+                                if ($customAttribute['type'] == 'contentrelation'){
+                                    foreach ($customAttribute['value'] as $relatedContent){
+                                        if($relatedContent && $relatedContent['contentId']) {
+                                            $relatedContentIds[] = $relatedContent['contentId'];
+                                        }
+                                    }
+                                }
 
-							}
+                            }
                         }
 
                     }

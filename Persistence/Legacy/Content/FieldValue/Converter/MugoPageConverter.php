@@ -4,7 +4,7 @@
  * @copyright Copyright (C) Ibexa AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace Mugo\PageBundle\Persistence\Legacy\Content\FieldValue\Converter;
+namespace MugoWeb\PageBundle\Persistence\Legacy\Content\FieldValue\Converter;
 
 use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
 use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
@@ -22,7 +22,7 @@ class MugoPageConverter implements Converter
      *
      * @deprecated since 6.8, will be removed in 7.x, use default constructor instead.
      *
-     * @return \Mugo\PageBundle\Persistence\Legacy\Content\FieldValue\Converter\MugoPageConverter
+     * @return \MugoWeb\PageBundle\Persistence\Legacy\Content\FieldValue\Converter\MugoPageConverter
      */
     public static function create()
     {

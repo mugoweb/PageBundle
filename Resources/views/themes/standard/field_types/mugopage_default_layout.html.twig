@@ -26,7 +26,12 @@
         <div class="mugopage-default-template-subtitle">Config</div>
         {% for layoutKey, layoutValue in configArray %}
 
-            {% if layoutValue is not iterable %}
+            {% if layoutValue is same as(false) or layoutValue is same as(true) %}
+                <div class="mugopage-default-template-group">
+                    <label>{{ layoutKey }}</label>
+                    <div>{{ layoutValue ? 'True' : 'False' }}</div>
+                </div>
+            {% elseif layoutValue is not iterable %}
                 <div class="mugopage-default-template-group">
                     <label>{{ layoutKey }}</label>
                     <div>{{ layoutValue }}</div>
