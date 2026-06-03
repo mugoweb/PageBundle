@@ -273,10 +273,11 @@ class UpdateLegacyDataCommand extends Command {
                                                                         break;
                                                                     case 'choice':
                                                                         $options = \eZINI::instance( 'block.ini' )->hasVariable( $blockType, 'CustomAttributeSelection_' .  $attrValue['identifier']) ? \eZINI::instance( 'block.ini' )->variable( $blockType, 'CustomAttributeSelection_' .  $attrValue['identifier']) : [];
+                                                                        $optionsValues = array_keys($options);
                                                                         $blockData['custom_attributes'][] = [
                                                                             'identifier' => $attrValue['identifier'],
                                                                             'type' => $attrValue['type'],
-                                                                            'value' => $options[$customAttributes[$attrValue['identifier']]]
+                                                                            'value' => array_search($customAttributes[$attrValue['identifier']], $optionsValues)
                                                                         ];
                                                                         break;
                                                                     default:
