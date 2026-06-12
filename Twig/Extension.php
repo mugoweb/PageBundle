@@ -14,8 +14,7 @@ use Twig\Error\SyntaxError;
 use \Twig\Extension\AbstractExtension;
 use \Twig\TwigFunction;
 use \Twig\Environment;
-use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
-use Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException;
+use \Ibexa\FieldTypeRichText\RichText\ConverterDispatcher;
 
 class Extension extends AbstractExtension
 {
@@ -48,12 +47,16 @@ class Extension extends AbstractExtension
     /** @var \Ibexa\Contracts\Core\Repository\LocationService */
     private $locationService;
 
+    /** @var \Ibexa\FieldTypeRichText\RichText\ConverterDispatcher */
+    private $converterDispatcher;
+
     public function __construct(
         Container $container,
         Repository $repository,
         MugoPageService $mugoPageService,
         ContentService $contentService,
-        Environment $twigEnvironment
+        Environment $twigEnvironment,
+        ConverterDispatcher $converterDispatcher
     ){
         $this->container = $container;
         $this->repository = $repository;
@@ -61,6 +64,7 @@ class Extension extends AbstractExtension
         $this->contentService = $contentService;
         $this->twigEnvironment = $twigEnvironment;
         $this->locationService = $repository->getLocationService();
+        $this->converterDispatcher = $converterDispatcher;
     }
 
     /**
@@ -89,7 +93,23 @@ class Extension extends AbstractExtension
             new TwigFunction('render_mugopage_zone', array($this, 'renderMugoPageZone'), ['is_safe' => ['html']]),
             new TwigFunction('render_mugopage_block', array($this, 'renderMugoPageBlock'), ['is_safe' => ['html']]),
             new TwigFunction('get_allowed_content_identifiers', array($this, 'getAllowedContentIdentifiers')),
+            new TwigFunction('mugopage_richtext_value_to_domdocument', array($this, 'stringToDOMDocument')),
         );
+    }
+
+    /**
+     * Convert String into DOMDocument
+     * @return array
+     */
+    function stringToDOMDocument(String $value){
+        $dom = new \DOMDocument();
+        // Load XML from a string
+        $dom->loadXML($value);
+        $convertedDoc = $this->converterDispatcher->dispatch(
+            $dom
+        );
+        return $convertedDoc;
+
     }
 
     /**

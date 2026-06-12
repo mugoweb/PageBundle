@@ -22,6 +22,33 @@ const mugoPageFields = document.querySelectorAll('section.mugopage-edit-field-se
 const udwContainer = document.getElementById('react-udw');
 let udwRoot = null;
 
+const initMugoPageEditors = () => {
+    console.log('MugoPageEditors: Initializing');
+    // Ensure the Ibexa namespace and the RichText class are actually loaded
+    if (!window.ibexa || !window.ibexa.BaseRichText) {
+        console.warn('MugoPageEditors: Ibexa BaseRichText not found yet.');
+        return;
+    }
+
+    const containers = document.querySelectorAll('.mugopage-zone-section .mugopage-richtext .ibexa-data-source__richtext');
+
+    containers.forEach((container) => {
+        // Ibexa usually marks initialized editors. CKEditor 5 adds a 'ck' class to the editable element.
+        if (container.querySelector('.ck-editor') || container.classList.contains('ck-enabled')) {
+            return;
+        }
+
+        try {
+            const richText = new window.ibexa.BaseRichText();
+            richText.init(container);
+            container.classList.add('ck-enabled'); // Prevent double-init
+            console.log('MugoPageEditors: Initialized field', container);
+        } catch (e) {
+            console.error('MugoPageEditors: Failed to init RichText', e);
+        }
+    });
+};
+
 Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
 
     /**
@@ -90,6 +117,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                         case 'string':
                         case 'integer':
                         case 'text':
+                        case 'richtext':
                             caIdentifier = customAttributeFieldSet.getAttribute('name');
                             caType = customAttributeFieldSet.getAttribute('data-type');
                             caValue = customAttributeFieldSet.value;
@@ -614,6 +642,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                                     }
                                     break;
                                 case 'text':
+                                case 'richtext':
                                     let textareaCustomField = newBlock.querySelector('.accordion-body .custom-attributes textarea[name="'+customAttribute.identifier+'"][data-type="' + customAttribute.type + '"]');
                                     if (textareaCustomField){
                                         textareaCustomField.value = customAttribute.value;
@@ -687,7 +716,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                                     break;
                             }
 
-                        })
+                        });
                     }
 
                 }
@@ -721,10 +750,9 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                 });
 
                 // store data in input change
-                let inputFields = newBlock.querySelectorAll('.accordion-body input,.accordion-body select,.accordion-body textarea');
-                Array.prototype.forEach.call(inputFields, function(inputField) {
-                    inputField.addEventListener('change', storeBlockConfiguration);
-                })
+                newBlock.addEventListener('change', storeBlockConfiguration);
+                // On key up also store changes
+                newBlock.addEventListener('keyup', storeBlockConfiguration);
 
                 // add UDW to content relation fields
                 let btnsAddRelatedContentToBlock = newBlock.querySelectorAll('button.btn-add-related-content-to-block');
@@ -768,6 +796,7 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
                     ibexa.helpers.notification.showWarningNotification('The block identifier ' + blockIdentifier + ' is not configured for the zone identifier ' + zoneIdentifier + '! Refresh the page to load the correct MugoPage configuration.');
                 }
             }
+            setTimeout(initMugoPageEditors, 1000);
 
         } else {
             if (showNotifications) {
@@ -890,6 +919,9 @@ Array.prototype.forEach.call(mugoPageFields, function(mugoPageField) {
             let data = JSON.parse(ibexaTextAreaField.value);
             loadData(data);
         }
+        document.addEventListener('click', function() {
+            setTimeout(storeBlockConfiguration, 500);
+        });
     })
 
     /**

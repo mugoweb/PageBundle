@@ -625,6 +625,7 @@ class MugoPageService
                                         case 'integer':
                                         case 'checkbox':
                                         case 'text':
+                                        case 'richtext':
                                             $customAttribute['value'] = $dataAttribute['value'];
                                             break;
                                         case 'choice':

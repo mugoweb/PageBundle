@@ -511,15 +511,7 @@ function scrollBy(el, x, y) {
   el.scrollTop += y;
 }
 function clone(el) {
-  var Polymer = window.Polymer;
-  var $ = window.jQuery || window.Zepto;
-  if (Polymer && Polymer.dom) {
-    return Polymer.dom(el).cloneNode(true);
-  } else if ($) {
-    return $(el).clone(true)[0];
-  } else {
-    return el.cloneNode(true);
-  }
+  return el.cloneNode(true);
 }
 function setRect(el, rect) {
   css(el, 'position', 'absolute');

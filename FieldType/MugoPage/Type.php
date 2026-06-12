@@ -210,6 +210,7 @@ class Type extends FieldType
     public function getRelations(SPIValue $value)
     {
         $relatedContentIds = [];
+        $relatedLocationIds = [];
         /* @var \Ibexa\Core\FieldType\RelationList\Value $value */
         $data = @\json_decode($value, true);
         if($data && is_array($data) && isset($data['zones'])) {
@@ -220,15 +221,23 @@ class Type extends FieldType
 
                         if(isset($block['custom_attributes']) && $block['custom_attributes']){
                             foreach ($block['custom_attributes'] as $customAttribute) {
-
-                                if ($customAttribute['type'] == 'contentrelation'){
-                                    foreach ($customAttribute['value'] as $relatedContent){
-                                        if($relatedContent && $relatedContent['contentId']) {
-                                            $relatedContentIds[] = $relatedContent['contentId'];
+                                switch($customAttribute['type']) {
+                                    case 'contentrelation':
+                                        foreach ($customAttribute['value'] as $relatedContent){
+                                            if($relatedContent && $relatedContent['contentId']) {
+                                                $relatedContentIds[] = $relatedContent['contentId'];
+                                            }
                                         }
-                                    }
+                                        break;
+                                    case 'richtext':
+                                        $dom = new \DOMDocument();
+                                        // Load XML from a string
+                                        $dom->loadXML($customAttribute['value']);
+                                        $relations = $this->getRichTextRelations($dom);
+                                        $relatedContentIds = array_merge($relatedContentIds, $relations['contentIds']);
+                                        $relatedLocationIds = array_merge($relatedLocationIds, $relations['locationIds']);
+                                        break;
                                 }
-
                             }
                         }
 
@@ -237,9 +246,44 @@ class Type extends FieldType
 
             }
         }
+        return [
+            Relation::LINK => ['locationIds' => array_unique($relatedLocationIds)],
+            Relation::FIELD => array_unique($relatedContentIds),
+        ];
+    }
+
+    private function getRichTextRelations(\DOMDocument $xml): array
+    {
+        $contentIds = [];
+        $locationIds = [];
+
+        $xpath = new \DOMXPath($xml);
+
+        // Query for any element that has an href OR data-href attribute
+        // starting with ezcontent:// or ezlocation://
+        $xpathExpression = "//*[starts-with(@href, 'ez') or starts-with(@data-href, 'ez')]";
+
+        /** @var \DOMElement $element */
+        foreach ($xpath->query($xpathExpression) as $element) {
+            $uri = $element->getAttribute('href') ?: $element->getAttribute('data-href');
+
+            // Extract the scheme and the numeric ID
+            // Handles patterns like ezcontent://123 or ezlocation://456
+            if (preg_match('~^(ezcontent|ezlocation)://(\d+)~', $uri, $matches)) {
+                $scheme = $matches[1];
+                $id = (int)$matches[2];
+
+                if ($scheme === 'ezcontent') {
+                    $contentIds[] = $id;
+                } elseif ($scheme === 'ezlocation') {
+                    $locationIds[] = $id;
+                }
+            }
+        }
 
         return [
-            Relation::FIELD => $relatedContentIds,
+            'locationIds' => array_unique($locationIds),
+            'contentIds'  => array_unique($contentIds),
         ];
     }
 

@@ -1,0 +1,71 @@
+<fieldset>
+<label class="mugopage-label">{{ fieldData.name }}</label>
+<div class="form-group ibexa-field-edit">
+    <div class="ibexa-field-edit__distraction-free-mode d-none">
+        <div class="ibexa-field-edit__distraction-free-mode-notice-container">
+
+            <div class="alert ibexa-alert ibexa-alert--complementary ibexa-alert--medium
+                 " role="alert">
+                <div class="ibexa-alert__icon-wrapper">
+                    <svg class="ibexa-icon ibexa-alert__icon ibexa-icon--small">
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#system-information"></use>
+                    </svg>
+                </div>
+                <div class="ibexa-alert__content ">
+                    <div class="ibexa-alert__title">To exit distraction free mode, click the <svg class="ibexa-icon ibexa-icon--small">
+                        <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#un-focus"></use>
+                        </svg> or press Esc.</div>
+                    <div class="ibexa-alert__extra_content">
+                    </div>
+                </div>
+                <div class="ibexa-alert__actions">
+                </div>
+                <button class="btn ibexa-btn ibexa-btn--no-text ibexa-alert__close-btn" data-bs-dismiss="alert">
+                    <svg class="ibexa-icon ibexa-icon--tiny">
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#discard"></use>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+        <div class="ibexa-field-edit__distraction-free-mode-extras"></div>
+        <div class="ibexa-field-edit__distraction-free-mode-control-container">
+            <div class="ibexa-field-edit__distraction-free-mode-label"><label class="ibexa-label form-label" for="ezplatform_content_forms_content_edit_fieldsData_credit_value">Image Credit</label></div>
+            <div class="ibexa-field-edit__distraction-free-mode-btns">
+                <button type="button" class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--small ibexa-field-edit__distraction-free-mode-control-btn ibexa-field-edit__distraction-free-mode-control-btn--enable">
+                    <svg class="ibexa-icon ibexa-icon--tiny-small">
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#focus"></use>
+                    </svg>
+                    <span class="ibexa-btn__label" data-original-title="Enter distraction free mode. It shows only rich text editor toolbar and focuses your attention on editing text." data-bs-original-title="Enter distraction free mode. It shows only rich text editor toolbar and focuses your attention on editing text.">
+                        Distraction free mode
+                    </span>
+                </button>
+                <button type="button" class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--small ibexa-field-edit__distraction-free-mode-control-btn ibexa-field-edit__distraction-free-mode-control-btn--disable">
+                    <svg class="ibexa-icon ibexa-icon--tiny-small">
+                    <use xlink:href="/bundles/ibexaadminui/img/ibexa-icons.svg#un-focus"></use>
+                    </svg>
+                    <span class="ibexa-btn__label">
+                        Exit distraction free mode
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mugopage-richtext ibexa-data-source">
+        <div class="ibexa-data-source ibexa-data-source--richtext">
+            <textarea rows="10" hidden="hidden" data-type="{{ fieldData.type }}" name="{{ fieldData.identifier }}" class="ezrichtext-field">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;section xmlns=&quot;http://ibexa.co/namespaces/ezpublish5/xhtml5/edit&quot;/&gt;</textarea>
+            <div class="hidden" data-udw-config-name="richtext_embed" data-udw-config="{&quot;multiple&quot;:false,&quot;multipleItemsLimit&quot;:0,&quot;rootLocationId&quot;:1,&quot;startingLocationId&quot;:1,&quot;containersOnly&quot;:false,&quot;allowedContentTypes&quot;:null,&quot;activeSortClause&quot;:&quot;DatePublished&quot;,&quot;activeSortOrder&quot;:&quot;ascending&quot;,&quot;activeTab&quot;:&quot;browse&quot;,&quot;activeView&quot;:&quot;finder&quot;,&quot;allowRedirects&quot;:false,&quot;allowConfirmation&quot;:true,&quot;contentOnTheFly&quot;:{&quot;allowedLanguages&quot;:null,&quot;allowedLocations&quot;:null,&quot;preselectedLanguage&quot;:null,&quot;preselectedContentType&quot;:null,&quot;hidden&quot;:false,&quot;autoConfirmAfterPublish&quot;:true},&quot;tabsConfig&quot;:{&quot;search&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:10,&quot;hidden&quot;:false},&quot;bookmarks&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:20,&quot;hidden&quot;:false},&quot;browse&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:30}}}"></div>
+            <div class="hidden" data-udw-config-name="richtext_embed_image" data-udw-config="{&quot;multiple&quot;:false,&quot;multipleItemsLimit&quot;:0,&quot;rootLocationId&quot;:1,&quot;startingLocationId&quot;:1,&quot;containersOnly&quot;:false,&quot;allowedContentTypes&quot;:[&quot;image&quot;],&quot;activeSortClause&quot;:&quot;DatePublished&quot;,&quot;activeSortOrder&quot;:&quot;ascending&quot;,&quot;activeTab&quot;:&quot;browse&quot;,&quot;activeView&quot;:&quot;finder&quot;,&quot;allowRedirects&quot;:false,&quot;allowConfirmation&quot;:true,&quot;contentOnTheFly&quot;:{&quot;allowedLanguages&quot;:null,&quot;allowedLocations&quot;:null,&quot;preselectedLanguage&quot;:null,&quot;preselectedContentType&quot;:null,&quot;hidden&quot;:false,&quot;autoConfirmAfterPublish&quot;:true},&quot;tabsConfig&quot;:{&quot;search&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:10,&quot;hidden&quot;:false},&quot;bookmarks&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:20,&quot;hidden&quot;:false},&quot;browse&quot;:{&quot;itemsPerPage&quot;:50,&quot;priority&quot;:30}}}"></div>
+            <div class="ibexa-data-source__richtext"></div>
+            <div class="ibexa-richtext-tools">
+                <ul class="ibexa-elements-path"></ul>
+                <div class="ibexa-character-counter">
+                    <span class="ibexa-character-counter__word-count">0</span> words
+                    <span class="ibexa-character-counter__character-count">0</span> characters
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</fieldset>

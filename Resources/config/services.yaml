@@ -14,6 +14,7 @@ parameters:
             choice: 'Choice'
             contentrelation: 'Content Relation'
             integer: 'Integer'
+            richtext: 'RichText'
             string: 'String'
             text: 'Text'
 
@@ -100,6 +101,7 @@ services:
             $mugoPageService: '@mugopage.service'
             $contentService: '@ibexa.api.service.content'
             $twigEnvironment: '@twig'
+            $converterDispatcher: '@Ibexa\FieldTypeRichText\RichText\ConverterDispatcher'
         public: true
         tags:
             - { name: twig.extension }
